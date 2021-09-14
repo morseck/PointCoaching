@@ -1,0 +1,1 @@
+web: java -Dserver.port=16235 $JAVA_OPTS -jar target/pointcoaching-0.0.1-SNAPSHOT.jar
