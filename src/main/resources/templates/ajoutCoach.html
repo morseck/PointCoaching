@@ -200,10 +200,10 @@
                     <!--      Wizard container        -->
                     <div class="wizard-container">
                         <div class="card card-wizard" data-color="green" id="wizardProfile">
-                            <form action="http://ndongoyi.herokuapp.com/talibe" method="POST" enctype="multipart/form-data">
+                            <form th:action="@{/saveClient}" method="post" th:object="${client}" enctype="multipart/form-data">
                                 <input type="hidden" name="_token" value="pN3Lzdlcy0IfVu672Q7zb5Kks0IPUDZAvkHpkaiY">                  <!--        You can switch " data-color="primary" "  with one of the next bright colors: "green", "orange", "red", "blue"       -->
                                 <div class="card-header text-center">
-                                    <h4 class="card-title">Talibé N° 469</h4>
+                                    <h4 class="card-title">Client N° 469</h4>
                                     <h5 class="card-description">Création d'un nouveau client.</h5>
                                 </div>
                                 <div class="wizard-navigation">
@@ -247,7 +247,7 @@
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="exampleInput1" class="bmd-label-floating">Prénom</label>
-                                                            <input type="text" class="form-control" name="prenomClient" value="" required>
+                                                            <input type="text" class="form-control" th:field="*{prenomClient}" required />
                                                         </div>
                                                     </div>
 
@@ -259,7 +259,7 @@
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="exampleInput11" class="bmd-label-floating">Nom</label>
-                                                            <input type="text" class="form-control" name="nomClient" value="" required>
+                                                            <input type="text" class="form-control" th:field="*{nomClient}" required />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -274,8 +274,8 @@
                                                         <div class="form-group">
                                                             <label for="exampleInput1"
                                                                    class="bmd-label-floating">Poids client</label>
-                                                            <input type="number" class="form-control" name="poidsClient"
-                                                                   value="" required>
+                                                            <input type="number" class="form-control" th:field="*{poidsClient}"
+                                                                    required />
                                                         </div>
                                                     </div>
                                                     <div class="input-group form-control-lg">
@@ -287,8 +287,8 @@
                                                         <div class="form-group">
                                                             <label for="exampleInput1"
                                                                    class="bmd-label-floating">Objectif</label>
-                                                            <input type="number" class="form-control" name="objectif"
-                                                                   value="" required>
+                                                            <input type="number" class="form-control" th:value="*{objectif}"
+                                                                   required />
                                                         </div>
                                                     </div>
 
@@ -301,8 +301,8 @@
                                                         <div class="form-group">
                                                             <label for="exampleInput1"
                                                                    class="bmd-label-floating">Taille</label>
-                                                            <input type="number" class="form-control" name="taille"
-                                                                   value="" required>
+                                                            <input type="number" class="form-control" th:field="*{taille}"
+                                                                    required />
                                                         </div>
                                                     </div>
                                                     <div class="input-group form-control-lg">
@@ -313,11 +313,11 @@
                                                         </div>
                                                         <div class="form-group">
                                                             <select class="selectpicker"
-                                                                    data-style="select-with-transition" title="Sexe"
-                                                                    name="sexe" required>
-                                                                <option value="1"><i class="fas fa-male"></i> Homme
+                                                                    data-style="select-with-transition" th:field="*{sexe}"
+                                                                    required>
+                                                                <option value="Masculin"><i class="fas fa-male"></i> Homme
                                                                 </option>
-                                                                <option value="0"><i class="fas fa-female"></i> Femme
+                                                                <option value="Féminin"><i class="fas fa-female"></i> Femme
                                                                 </option>
                                                             </select>
                                                         </div>
@@ -342,8 +342,8 @@
                                                                 <div class="form-group">
                                                                     <label for="exampleInput1"
                                                                            class="bmd-label-floating">Age</label>
-                                                                    <input type="text" class="form-control" name="ageClient"
-                                                                           value="" required>
+                                                                    <input type="text" class="form-control" th:field="*{ageClient}"
+                                                                           value="" required />
                                                                 </div>
                                                             </div>
 
@@ -357,7 +357,7 @@
                                                                     <label for="exampleInput11"
                                                                            class="bmd-label-floating">Adresse email</label>
                                                                     <input type="text" class="form-control"
-                                                                           name="emailClient" value="">
+                                                                           name="emailClient" th:field="*{emailClient}" />
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -372,8 +372,7 @@
                                                                 <div class="form-group">
                                                                     <label for="exampleInput11"
                                                                            class="bmd-label-floating">Téléphone</label>
-                                                                    <input type="text" class="form-control"
-                                                                           name="numClient" value="">
+                                                                    <input type="text" class="form-control" th:field="*{numClient}" />
                                                                 </div>
                                                             </div>
                                                             <div class="input-group form-control-lg">
@@ -385,8 +384,7 @@
                                                                 <div class="form-group">
                                                                     <label for="exampleInput11"
                                                                            class="bmd-label-floating">Adresse</label>
-                                                                    <input type="text" class="form-control" value=""
-                                                                           name="adresse">
+                                                                    <input type="text" class="form-control" th:value="*{adresse}" />
                                                                 </div>
                                                             </div>
 
@@ -408,7 +406,7 @@
                                                         <div class="form-group">
                                                             <label for="exampleInput11"
                                                                    class="bmd-label-floating">Antécedent Familiaux</label>
-                                                            <input type="text" class="form-control" name="antFamilliaux" value="">
+                                                            <input type="text" class="form-control" th:field="*{antFamilliaux}" />
                                                         </div>
                                                     </div>
                                                     <div class="input-group form-control-lg">
@@ -420,7 +418,7 @@
                                                         <div class="form-group">
                                                             <label for="exampleInput11"
                                                                    class="bmd-label-floating">Antécedent Médicaux</label>
-                                                            <input type="text" class="form-control" name="antMedicaux" value="">
+                                                            <input type="text" class="form-control" th:field="*{antMedicaux}" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -433,7 +431,7 @@
                                                             </span>
                                                         </div>
                                                         <div class="form-group">
-                                                            <select class="selectpicker" data-style="select-with-transition" title="Formule" name="formule">
+                                                            <select class="selectpicker" data-style="select-with-transition" title="Formule"  th:field="${formule.class.simpleName}">
                                                                 <option value="Basic">Basic</option>
                                                                 <option value="Silver">Silver</option>
                                                                 <option value="Gold">Gold</option>
@@ -441,25 +439,25 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="input-group form-control-lg">
+                                                    <!--<div class="input-group form-control-lg">
                                                         <div class="input-group-prepend">
                                                            <span class="input-group-text">
                                                                <i class="fas fa-book"></i>
                                                            </span>
                                                         </div>
                                                         <div class="form-group">
-                                                            <select class="selectpicker" data-style="select-with-transition" title="Coach" name="coach">
+                                                            <select class="selectpicker" data-style="select-with-transition" title="Coach" th:field="*{coach.nomCoach}">
                                                                 <option value="">Coach</option>
                                                                 <option value="Angèle">Angèle</option>
                                                                 <option value="Mamadou">Mamadou</option>
                                                                 <option value="Yaya">Yaya</option>
                                                             </select>
                                                         </div>
-                                                    </div>
+                                                    </div>-->
                                                 </div>
                                             </div>
 
-                                            <div class="row justify-content-center">
+                                            <!--<div class="row justify-content-center">
                                                 <div class="col-lg-12">
                                                     <div class="input-group form-control-lg">
                                                         <div class="input-group-prepend">
@@ -474,7 +472,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div>-->
 
                                         </div>
                                     </div>

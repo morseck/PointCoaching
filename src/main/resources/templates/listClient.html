@@ -151,7 +151,7 @@
                                         <span style="color: black">Mon compte</span>
                                     </a>
 
-                                    <a class="dropdown-item" href="@{/logout}"
+                                    <a class="dropdown-item" th:href="@{/logout}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         <span style="color: black">Déconnexion</span>
@@ -292,7 +292,6 @@
                     </div>
                 </div>
             </footer>
-
         </div>
     </div>
 
