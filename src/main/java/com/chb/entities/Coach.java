@@ -1,13 +1,27 @@
 package com.chb.entities;
 
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Collection;
 
+@Entity
 public class Coach implements Serializable {
+    @Id
+    @Column(length = 25)
     private String codeCoach;
+    @Column(length = 25)
     private String nomCoach;
+    @OneToMany(mappedBy = "coach", fetch = FetchType.LAZY)
+    private Collection<Client> clients;
+    @OneToMany(mappedBy = "coach", fetch = FetchType.LAZY)
+    private Collection<Point> points;
 
     public Coach() {
         super();
+    }
+    public Coach(String codeCoach) {
+        super();
+        this.codeCoach = codeCoach;
     }
 
     public Coach(String codeCoach, String nomCoach) {
@@ -15,6 +29,7 @@ public class Coach implements Serializable {
         this.codeCoach = codeCoach;
         this.nomCoach = nomCoach;
     }
+
 
     public String getCodeCoach() {
         return codeCoach;

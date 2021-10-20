@@ -1,13 +1,16 @@
 package com.chb.entities;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
+@Entity
 public class Point implements Serializable {
+    @Id @GeneratedValue
     private Long codePoint;
     private Date datePoint;
     private double poidsPerdus;
-    private String semaine;
+    private int semaine;
     private Boolean routineAlimentaire;
     private Boolean mindfulEating;
     private Boolean hydratation;
@@ -15,16 +18,24 @@ public class Point implements Serializable {
     private String infosSupplementaire;
     private Boolean stress;
     private Boolean sommeil;
+    @ManyToOne
+    @JoinColumn(name = "CODE_COACH")
     private Coach coach;
+    @ManyToOne
+    @JoinColumn(name = "CODE_CLI")
     private Client client;
+    @ManyToOne
+    @JoinColumn(name = "CODE_FORM")
     private Formule formule;
+    @ManyToOne
+    @JoinColumn(name = "CODE_RESU")
     private ResumeRdv resumeRdv;
 
     public Point() {
         super();
     }
 
-    public Point(Date datePoint, double poidsPerdus, String semaine, Boolean routineAlimentaire, Boolean mindfulEating, Boolean hydratation, Boolean sport, String infosSupplementaire, Boolean stress, Boolean sommeil, Coach coach, Client client, Formule formule, ResumeRdv resumeRdv) {
+    public Point(Date datePoint, double poidsPerdus, int semaine, Boolean routineAlimentaire, Boolean mindfulEating, Boolean hydratation, Boolean sport, String infosSupplementaire, Boolean stress, Boolean sommeil, Coach coach, Client client,Formule formule,ResumeRdv resumeRdv) {
         super();
         this.datePoint = datePoint;
         this.poidsPerdus = poidsPerdus;
@@ -66,11 +77,11 @@ public class Point implements Serializable {
         this.poidsPerdus = poidsPerdus;
     }
 
-    public String getSemaine() {
+    public int getSemaine() {
         return semaine;
     }
 
-    public void setSemaine(String semaine) {
+    public void setSemaine(int semaine) {
         this.semaine = semaine;
     }
 

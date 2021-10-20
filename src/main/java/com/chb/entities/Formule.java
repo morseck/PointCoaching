@@ -1,24 +1,17 @@
 package com.chb.entities;
 
+import javax.persistence.*;
 import java.io.Serializable;
 
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="TYPE_FORM",discriminatorType = DiscriminatorType.STRING,length=3)
 public class Formule implements Serializable {
+    @Id @GeneratedValue
     private Long codeFormule;
-    private double poidsActuel;
-    private String antFamilliaux;
-    private String antMedicaux;
-    private Boolean cureEnPause;
 
     public Formule() {
         super();
-    }
-
-    public Formule(double poidsActuel, String antFamilliaux, String antMedicaux, Boolean cureEnPause) {
-        super();
-        this.poidsActuel = poidsActuel;
-        this.antFamilliaux = antFamilliaux;
-        this.antMedicaux = antMedicaux;
-        this.cureEnPause = cureEnPause;
     }
 
     public Long getCodeFormule() {
@@ -27,37 +20,5 @@ public class Formule implements Serializable {
 
     public void setCodeFormule(Long codeFormule) {
         this.codeFormule = codeFormule;
-    }
-
-    public double getPoidsActuel() {
-        return poidsActuel;
-    }
-
-    public void setPoidsActuel(double poidsActuel) {
-        this.poidsActuel = poidsActuel;
-    }
-
-    public String getAntFamilliaux() {
-        return antFamilliaux;
-    }
-
-    public void setAntFamilliaux(String antFamilliaux) {
-        this.antFamilliaux = antFamilliaux;
-    }
-
-    public String getAntMedicaux() {
-        return antMedicaux;
-    }
-
-    public void setAntMedicaux(String antMedicaux) {
-        this.antMedicaux = antMedicaux;
-    }
-
-    public Boolean getCureEnPause() {
-        return cureEnPause;
-    }
-
-    public void setCureEnPause(Boolean cureEnPause) {
-        this.cureEnPause = cureEnPause;
     }
 }

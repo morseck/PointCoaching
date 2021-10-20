@@ -66,13 +66,13 @@
                     <div class="collapse" id="point">
                         <ul class="nav">
                             <li class="nav-item ">
-                                <a class="nav-link" href="http:/point">
+                                <a class="nav-link" th:href="@{/listPoint}">
                                     <span class="sidebar-mini"> L </span>
                                     <span class="sidebar-normal"> LISTER </span>
                                 </a>
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link" href="http://point/create">
+                                <a class="nav-link" th:href="@{/ajoutPoint}">
                                     <span class="sidebar-mini"> N </span>
                                     <span class="sidebar-normal">NOUVEAU</span>
                                 </a>
@@ -83,7 +83,7 @@
                 </li>
 
                 <li class="nav-item ">
-                    <a class="nav-link collapse" href="http://point">
+                    <a class="nav-link collapse" th:href="@{/listFormule}">
                         <i class="fas fa-shopping-cart"></i>
                         <p> Formule </p>
                     </a>
@@ -96,13 +96,13 @@
                     <div class="collapse" id="coach">
                         <ul class="nav">
                             <li class="nav-item ">
-                                <a class="nav-link" href="http://coach">
+                                <a class="nav-link" th:href="@{/listCoach}">
                                     <span class="sidebar-mini"> L </span>
                                     <span class="sidebar-normal"> LISTER </span>
                                 </a>
                             </li>
                             <li class="nav-item ">
-                                <a class="nav-link" href="http://coach/create">
+                                <a class="nav-link" th:href="@{/ajoutCoach}">
                                     <span class="sidebar-mini"> N </span>
                                     <span class="sidebar-normal"> NOUVEAU </span>
                                 </a>
@@ -200,11 +200,11 @@
                     <!--      Wizard container        -->
                     <div class="wizard-container">
                         <div class="card card-wizard" data-color="green" id="wizardProfile">
-                            <form action="http://ndongoyi.herokuapp.com/talibe" method="POST" enctype="multipart/form-data">
+                            <form th:action="@{/saveClient}" method="post" th:object="${client}" enctype="multipart/form-data">
                                 <input type="hidden" name="_token" value="pN3Lzdlcy0IfVu672Q7zb5Kks0IPUDZAvkHpkaiY">                  <!--        You can switch " data-color="primary" "  with one of the next bright colors: "green", "orange", "red", "blue"       -->
                                 <div class="card-header text-center">
-                                    <h4 class="card-title">Talibé N° 469</h4>
-                                    <h5 class="card-description">Création d'un nouveau client.</h5>
+                                    <h4 class="card-title">Client N° 469</h4>
+                                    <h3 class="card-description">Création d'un nouveau client.</h3>
                                 </div>
                                 <div class="wizard-navigation">
                                     <ul class="nav nav-pills">
@@ -231,13 +231,13 @@
                                             <div class="row justify-content-center">
 
                                                 <div class="col-sm-6">
-                                                    <div class="picture-container">
+                                                    <!--<div class="picture-container">
                                                         <div class="picture">
                                                             <img src="../../assets/img/default-avatar.png" class="picture-src" id="wizardPicturePreview" title="" />
                                                             <input type="file" id="wizard-picture" name="avatar">
                                                         </div>
                                                         <h6 class="category">avatar</h6>
-                                                    </div>
+                                                    </div>-->
 
                                                     <div class="input-group form-control-lg">
                                                         <div class="input-group-prepend">
@@ -247,7 +247,7 @@
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="exampleInput1" class="bmd-label-floating">Prénom</label>
-                                                            <input type="text" class="form-control" name="prenomClient" value="" required>
+                                                            <input type="text" class="form-control" name="prenomClient" th:field="*{prenomClient}" required />
                                                         </div>
                                                     </div>
 
@@ -259,7 +259,7 @@
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="exampleInput11" class="bmd-label-floating">Nom</label>
-                                                            <input type="text" class="form-control" name="nomClient" value="" required>
+                                                            <input type="text" class="form-control" name="nomClient" th:field="*{nomClient}" required />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -274,8 +274,7 @@
                                                         <div class="form-group">
                                                             <label for="exampleInput1"
                                                                    class="bmd-label-floating">Poids client</label>
-                                                            <input type="number" class="form-control" name="poidsClient"
-                                                                   value="" required>
+                                                            <input type="number" class="form-control" name="poidsClient" required />
                                                         </div>
                                                     </div>
                                                     <div class="input-group form-control-lg">
@@ -288,7 +287,7 @@
                                                             <label for="exampleInput1"
                                                                    class="bmd-label-floating">Objectif</label>
                                                             <input type="number" class="form-control" name="objectif"
-                                                                   value="" required>
+                                                                   required />
                                                         </div>
                                                     </div>
 
@@ -302,7 +301,7 @@
                                                             <label for="exampleInput1"
                                                                    class="bmd-label-floating">Taille</label>
                                                             <input type="number" class="form-control" name="taille"
-                                                                   value="" required>
+                                                                    required />
                                                         </div>
                                                     </div>
                                                     <div class="input-group form-control-lg">
@@ -313,11 +312,10 @@
                                                         </div>
                                                         <div class="form-group">
                                                             <select class="selectpicker"
-                                                                    data-style="select-with-transition" title="Sexe"
-                                                                    name="sexe" required>
-                                                                <option value="1"><i class="fas fa-male"></i> Homme
+                                                                    data-style="select-with-transition" name="sexe" required>
+                                                                <option value="Masculin"><i class="fas fa-male"></i> Homme
                                                                 </option>
-                                                                <option value="0"><i class="fas fa-female"></i> Femme
+                                                                <option value="Féminin"><i class="fas fa-female"></i> Femme
                                                                 </option>
                                                             </select>
                                                         </div>
@@ -342,8 +340,7 @@
                                                                 <div class="form-group">
                                                                     <label for="exampleInput1"
                                                                            class="bmd-label-floating">Age</label>
-                                                                    <input type="text" class="form-control" name="ageClient"
-                                                                           value="" required>
+                                                                    <input type="text" class="form-control" name="ageClient" value="" required />
                                                                 </div>
                                                             </div>
 
@@ -356,8 +353,7 @@
                                                                 <div class="form-group">
                                                                     <label for="exampleInput11"
                                                                            class="bmd-label-floating">Adresse email</label>
-                                                                    <input type="text" class="form-control"
-                                                                           name="emailClient" value="">
+                                                                    <input type="text" class="form-control" name="emailClient" />
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -370,10 +366,8 @@
                                                                     </span>
                                                                 </div>
                                                                 <div class="form-group">
-                                                                    <label for="exampleInput11"
-                                                                           class="bmd-label-floating">Téléphone</label>
-                                                                    <input type="text" class="form-control"
-                                                                           name="numClient" value="">
+                                                                    <label for="exampleInput11" class="bmd-label-floating">Téléphone</label>
+                                                                        <input type="text" class="form-control" name="numClient" />
                                                                 </div>
                                                             </div>
                                                             <div class="input-group form-control-lg">
@@ -385,8 +379,7 @@
                                                                 <div class="form-group">
                                                                     <label for="exampleInput11"
                                                                            class="bmd-label-floating">Adresse</label>
-                                                                    <input type="text" class="form-control" value=""
-                                                                           name="adresse">
+                                                                    <input type="text" class="form-control" name="adresse" />
                                                                 </div>
                                                             </div>
 
@@ -408,7 +401,7 @@
                                                         <div class="form-group">
                                                             <label for="exampleInput11"
                                                                    class="bmd-label-floating">Antécedent Familiaux</label>
-                                                            <input type="text" class="form-control" name="antFamilliaux" value="">
+                                                            <input type="text" class="form-control" name="antFamilliaux" />
                                                         </div>
                                                     </div>
                                                     <div class="input-group form-control-lg">
@@ -420,7 +413,7 @@
                                                         <div class="form-group">
                                                             <label for="exampleInput11"
                                                                    class="bmd-label-floating">Antécedent Médicaux</label>
-                                                            <input type="text" class="form-control" name="antMedicaux" value="">
+                                                            <input type="text" class="form-control" name="antMedicaux" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -433,10 +426,11 @@
                                                             </span>
                                                         </div>
                                                         <div class="form-group">
-                                                            <select class="selectpicker" data-style="select-with-transition" title="Formule" name="formule">
-                                                                <option value="Basic">Basic</option>
-                                                                <option value="Silver">Silver</option>
-                                                                <option value="Gold">Gold</option>
+                                                            <select class="selectpicker" data-style="select-with-transition" title="Formule" id="formule.codeFormule" name="formule.codeFormule">
+                                                                <option value="">Formule</option>
+                                                                <option value="1">Basic</option>
+                                                                <option value="2">Silver</option>
+                                                                <option value="3">Gold</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -448,18 +442,18 @@
                                                            </span>
                                                         </div>
                                                         <div class="form-group">
-                                                            <select class="selectpicker" data-style="select-with-transition" title="Coach" name="coach">
-                                                                <option value="">Coach</option>
-                                                                <option value="Angèle">Angèle</option>
-                                                                <option value="Mamadou">Mamadou</option>
-                                                                <option value="Yaya">Yaya</option>
+                                                            <select class="selectpicker" data-style="select-with-transition" title="Coach" id="coach.codeCoach" name="coach.codeCoach">
+                                                                <option value="" disabled>Coach</option>
+                                                                <option value="angele">Angèle</option>
+                                                                <option value="mamadou">Mamadou</option>
+                                                                <option value="yaya">Yaya</option>
                                                             </select>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <div class="row justify-content-center">
+                                            <!--<div class="row justify-content-center">
                                                 <div class="col-lg-12">
                                                     <div class="input-group form-control-lg">
                                                         <div class="input-group-prepend">
@@ -474,7 +468,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div>-->
 
                                         </div>
                                     </div>
@@ -501,23 +495,8 @@
                 <nav class="float-left">
                     <ul>
                         <li>
-                            <a href="https://www.creative-tim.com">
-                                Creative Tim
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://creative-tim.com/presentation">
-                                About Us
-                            </a>
-                        </li>
-                        <li>
-                            <a href="http://blog.creative-tim.com">
-                                Blog
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://www.creative-tim.com/license">
-                                Licenses
+                            <a href="https://codouk.com">
+                                A propos
                             </a>
                         </li>
                     </ul>

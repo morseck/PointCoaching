@@ -1,22 +1,16 @@
 package com.chb.entities;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+
+@Entity
+@DiscriminatorValue("BAS")
 public class Basic extends Formule{
-    private int nbrRdv;
+    final int nbRdv = 3;
 
     public Basic() {
-
+        super();
     }
 
-    public Basic(double poidsActuel, String antFamilliaux, String antMedicaux, Boolean cureEnPause, int nbrRdv) {
-        super(poidsActuel, antFamilliaux, antMedicaux, cureEnPause);
-        this.nbrRdv = nbrRdv;
-    }
 
-    public int getNbrRdv() {
-        return nbrRdv;
-    }
-
-    public void setNbrRdv(int nbrRdv) {
-        this.nbrRdv = nbrRdv;
-    }
 }

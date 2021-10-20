@@ -200,30 +200,11 @@
                     <!--      Wizard container        -->
                     <div class="wizard-container">
                         <div class="card card-wizard" data-color="green" id="wizardProfile">
-                            <form th:action="@{/saveClient}" method="post" th:object="${client}" enctype="multipart/form-data">
+                            <form th:action="@{/saveCoach}" method="post" th:object="${coach}" enctype="multipart/form-data">
                                 <input type="hidden" name="_token" value="pN3Lzdlcy0IfVu672Q7zb5Kks0IPUDZAvkHpkaiY">                  <!--        You can switch " data-color="primary" "  with one of the next bright colors: "green", "orange", "red", "blue"       -->
                                 <div class="card-header text-center">
-                                    <h4 class="card-title">Client N° 469</h4>
-                                    <h5 class="card-description">Création d'un nouveau client.</h5>
-                                </div>
-                                <div class="wizard-navigation">
-                                    <ul class="nav nav-pills">
-                                        <li class="nav-item">
-                                            <a class="nav-link active" href="#about" data-toggle="tab" role="tab">
-                                                Etape 1
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#account" data-toggle="tab" role="tab">
-                                                Etape 2
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#address" data-toggle="tab" role="tab">
-                                                Etape 3
-                                            </a>
-                                        </li>
-                                    </ul>
+                                    <h4 class="card-title">Coach N° 5</h4>
+                                    <h3 class="card-description">Création d'un nouveau coach.</h3>
                                 </div>
                                 <div class="card-body">
                                     <div class="tab-content">
@@ -231,14 +212,6 @@
                                             <div class="row justify-content-center">
 
                                                 <div class="col-sm-6">
-                                                    <div class="picture-container">
-                                                        <div class="picture">
-                                                            <img src="../../assets/img/default-avatar.png" class="picture-src" id="wizardPicturePreview" title="" />
-                                                            <input type="file" id="wizard-picture" name="avatar">
-                                                        </div>
-                                                        <h6 class="category">avatar</h6>
-                                                    </div>
-
                                                     <div class="input-group form-control-lg">
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text">
@@ -246,8 +219,8 @@
                                                             </span>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label for="exampleInput1" class="bmd-label-floating">Prénom</label>
-                                                            <input type="text" class="form-control" th:field="*{prenomClient}" required />
+                                                            <label for="exampleInput1" class="bmd-label-floating">Code</label>
+                                                            <input type="text" class="form-control" name="codeCoach" required />
                                                         </div>
                                                     </div>
 
@@ -258,234 +231,21 @@
                                                             </span>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label for="exampleInput11" class="bmd-label-floating">Nom</label>
-                                                            <input type="text" class="form-control" th:field="*{nomClient}" required />
+                                                            <label for="exampleInput11" class="bmd-label-floating">Nom coach</label>
+                                                            <input type="text" class="form-control" name="nomCoach" required />
                                                         </div>
                                                     </div>
                                                 </div>
 
-                                                <div class="col-sm-6">
-                                                    <div class="input-group form-control-lg">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text">
-                                                                <i class="fas fa-weight-hanging"></i>
-                                                                </span>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="exampleInput1"
-                                                                   class="bmd-label-floating">Poids client</label>
-                                                            <input type="number" class="form-control" th:field="*{poidsClient}"
-                                                                    required />
-                                                        </div>
+                                                <div class="input-group form-control-lg">
+                                                    <div class="form-group center" style="margin-left: 250px">
+                                                        <button type="submit" class="btn btn-success">Connexion</button>
                                                     </div>
-                                                    <div class="input-group form-control-lg">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text">
-                                                                <i class="fas fa-weight-hanging"></i>
-                                                                </span>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="exampleInput1"
-                                                                   class="bmd-label-floating">Objectif</label>
-                                                            <input type="number" class="form-control" th:value="*{objectif}"
-                                                                   required />
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="input-group form-control-lg">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text">
-                                                                <i class="fas fa-long-arrow-alt-up"></i>
-                                                                </span>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="exampleInput1"
-                                                                   class="bmd-label-floating">Taille</label>
-                                                            <input type="number" class="form-control" th:field="*{taille}"
-                                                                    required />
-                                                        </div>
-                                                    </div>
-                                                    <div class="input-group form-control-lg">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text">
-                                                                <i class="fas fa-venus-mars"></i>
-                                                            </span>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <select class="selectpicker"
-                                                                    data-style="select-with-transition" th:field="*{sexe}"
-                                                                    required>
-                                                                <option value="Masculin"><i class="fas fa-male"></i> Homme
-                                                                </option>
-                                                                <option value="Féminin"><i class="fas fa-female"></i> Femme
-                                                                </option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-
+                                                </div>
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <div class="tab-pane" id="account">
-                                            <div class="row justify-content-center">
-                                                <div class="col-lg-12">
-                                                    <div class="row">
-
-                                                        <div class="col-sm-6">
-                                                            <div class="input-group form-control-lg">
-                                                                <div class="input-group-prepend">
-                                                            <span class="input-group-text">
-                                                                <i class="fas fa-weight-hanging"></i>
-                                                                </span>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="exampleInput1"
-                                                                           class="bmd-label-floating">Age</label>
-                                                                    <input type="text" class="form-control" th:field="*{ageClient}"
-                                                                           value="" required />
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="input-group form-control-lg">
-                                                                <div class="input-group-prepend">
-                                                                    <span class="input-group-text">
-                                                                        <i class="fas fa-envelope"></i>
-                                                                    </span>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="exampleInput11"
-                                                                           class="bmd-label-floating">Adresse email</label>
-                                                                    <input type="text" class="form-control"
-                                                                           name="emailClient" th:field="*{emailClient}" />
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-sm-6">
-                                                            <div class="input-group form-control-lg">
-                                                                <div class="input-group-prepend">
-                                                                    <span class="input-group-text">
-                                                                      <i class="fas fa-mobile-alt"></i>
-                                                                    </span>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="exampleInput11"
-                                                                           class="bmd-label-floating">Téléphone</label>
-                                                                    <input type="text" class="form-control" th:field="*{numClient}" />
-                                                                </div>
-                                                            </div>
-                                                            <div class="input-group form-control-lg">
-                                                                <div class="input-group-prepend">
-                                                                <span class="input-group-text">
-                                                                    <i class="fas fa-map-marker-alt"></i>
-                                                                 </span>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="exampleInput11"
-                                                                           class="bmd-label-floating">Adresse</label>
-                                                                    <input type="text" class="form-control" th:value="*{adresse}" />
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="tab-pane" id="address">
-                                            <div class="row justify-content-center">
-                                                <div class="col-sm-6">
-                                                    <div class="input-group form-control-lg">
-                                                        <div class="input-group-prepend">
-                                                           <span class="input-group-text">
-                                                             <i class="fas fa-users"></i>
-                                                           </span>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="exampleInput11"
-                                                                   class="bmd-label-floating">Antécedent Familiaux</label>
-                                                            <input type="text" class="form-control" th:field="*{antFamilliaux}" />
-                                                        </div>
-                                                    </div>
-                                                    <div class="input-group form-control-lg">
-                                                        <div class="input-group-prepend">
-                                                           <span class="input-group-text">
-                                                             <i class="fas fa-hospital"></i>
-                                                           </span>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="exampleInput11"
-                                                                   class="bmd-label-floating">Antécedent Médicaux</label>
-                                                            <input type="text" class="form-control" th:field="*{antMedicaux}" />
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-sm-6">
-                                                    <div class="input-group form-control-lg">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text">
-                                                                <i class="fas fa-user-graduate"></i>
-                                                            </span>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <select class="selectpicker" data-style="select-with-transition" title="Formule"  th:field="${formule.class.simpleName}">
-                                                                <option value="Basic">Basic</option>
-                                                                <option value="Silver">Silver</option>
-                                                                <option value="Gold">Gold</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-
-                                                    <!--<div class="input-group form-control-lg">
-                                                        <div class="input-group-prepend">
-                                                           <span class="input-group-text">
-                                                               <i class="fas fa-book"></i>
-                                                           </span>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <select class="selectpicker" data-style="select-with-transition" title="Coach" th:field="*{coach.nomCoach}">
-                                                                <option value="">Coach</option>
-                                                                <option value="Angèle">Angèle</option>
-                                                                <option value="Mamadou">Mamadou</option>
-                                                                <option value="Yaya">Yaya</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>-->
-                                                </div>
-                                            </div>
-
-                                            <!--<div class="row justify-content-center">
-                                                <div class="col-lg-12">
-                                                    <div class="input-group form-control-lg">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text">
-
-                                                            </span>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="infosSupp" style="color: #4CAF50 !important;">Infos supplémentaire</label>
-                                                            <textarea class="form-control" id="infosSupp" name="infosSupp" rows="3" style="width: 115% !important;"
-                                                            ></textarea>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>-->
-
-                                        </div>
                                     </div>
-                                </div>
-                                <div class="card-footer">
-                                    <div class="mr-auto">
-                                        <input type="button" class="btn btn-previous btn-fill btn-default btn-wd disabled" name="previous" value="Précédent">
-                                    </div>
-                                    <div class="ml-auto">
-                                        <input type="button" class="btn btn-next btn-fill btn-success btn-wd" name="next" value="Suivant">
-                                        <input type="submit" class="btn btn-finish btn-fill btn-success btn-wd" name="finish" value="Valider" style="display: none;">
-                                    </div>
-                                    <div class="clearfix"></div>
                                 </div>
                             </form>
                         </div>
@@ -499,23 +259,8 @@
                 <nav class="float-left">
                     <ul>
                         <li>
-                            <a href="https://www.creative-tim.com">
-                                Creative Tim
-                            </a>
-                        </li>
-                        <li>
                             <a href="https://creative-tim.com/presentation">
                                 About Us
-                            </a>
-                        </li>
-                        <li>
-                            <a href="http://blog.creative-tim.com">
-                                Blog
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://www.creative-tim.com/license">
-                                Licenses
                             </a>
                         </li>
                     </ul>

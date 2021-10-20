@@ -1,8 +1,13 @@
 package com.chb.entities;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.io.Serializable;
 
+@Entity
 public class ResumeRdv implements Serializable {
+    @Id @GeneratedValue
     private Long codedResumeRdv;
     private String noteResumeRdv;
 

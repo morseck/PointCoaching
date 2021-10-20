@@ -1,11 +1,19 @@
 package com.chb.entities;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
 
+@Entity
 public class Client implements Serializable {
+    @Id @GeneratedValue
     private Long codeClient;
+    @Column(length = 25)
     private String nomClient;
+    @Column(length = 25)
+    private String prenomClient;
     private int ageClient;
     private double poidsClient;
     private double objectif;
@@ -13,17 +21,29 @@ public class Client implements Serializable {
     private String sexe;
     private String emailClient;
     private String numClient;
+    private String adresse;
+    private String antFamilliaux;
+    private String antMedicaux;
+    private double poidsActuel;
+    private Boolean cureEnPause = false;
 
+    @ManyToOne
+    @JoinColumn(name="CODE_COACH")
     private Coach coach;
+    @ManyToOne
+    @JoinColumn(name = "CODE_FORM")
     private Formule formule;
+    @OneToMany(mappedBy = "client",fetch = FetchType.LAZY)
     private Collection<Point> points;
 
     public Client() {
         super();
     }
 
-    public Client(String nomClient, int ageClient, double poidsClient, double objectif, double taille, String sexe, String emailClient, String numClient, Coach coach, Formule formule) {
+    public Client(String prenomClient, String nomClient, int ageClient, double poidsClient, double objectif, double taille, String sexe, String emailClient, String numClient, String adresse, String antFamilliaux,
+            String antMedicaux, Coach coach, Formule formule) {
         super();
+        this.prenomClient = prenomClient;
         this.nomClient = nomClient;
         this.ageClient = ageClient;
         this.poidsClient = poidsClient;
@@ -32,6 +52,9 @@ public class Client implements Serializable {
         this.sexe = sexe;
         this.emailClient = emailClient;
         this.numClient = numClient;
+        this.adresse = adresse;
+        this.antFamilliaux = antFamilliaux;
+        this.antMedicaux = antMedicaux;
         this.coach = coach;
         this.formule = formule;
     }
@@ -107,6 +130,45 @@ public class Client implements Serializable {
     public void setNumClient(String numClient) {
         this.numClient = numClient;
     }
+    public String getAdresse() {
+        return adresse;
+    }
+
+    public void setAdresse(String adresse) {
+        this.adresse = adresse;
+    }
+
+    public String getAntFamilliaux() {
+        return antFamilliaux;
+    }
+
+    public void setAntFamilliaux(String antFamilliaux) {
+        this.antFamilliaux = antFamilliaux;
+    }
+
+    public String getAntMedicaux() {
+        return antMedicaux;
+    }
+
+    public void setAntMedicaux(String antMedicaux) {
+        this.antMedicaux = antMedicaux;
+    }
+
+    public double getPoidsActuel() {
+        return poidsActuel;
+    }
+
+    public void setPoidsActuel(double poidsActuel) {
+        this.poidsActuel = poidsActuel;
+    }
+
+    public Boolean getCureEnPause() {
+        return cureEnPause;
+    }
+
+    public void setCureEnPause(Boolean cureEnPause) {
+        this.cureEnPause = cureEnPause;
+    }
 
     public Coach getCoach() {
         return coach;
@@ -130,5 +192,13 @@ public class Client implements Serializable {
 
     public void setPoints(Collection<Point> points) {
         this.points = points;
+    }
+
+    public String getPrenomClient() {
+        return prenomClient;
+    }
+
+    public void setPrenomClient(String prenomClient) {
+        this.prenomClient = prenomClient;
     }
 }

@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <title>
-        Point coaching inscription  </title>
+        Formulaire d'ajout Point  </title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
     <!--     Fonts and icons     -->
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
@@ -200,30 +200,11 @@
                     <!--      Wizard container        -->
                     <div class="wizard-container">
                         <div class="card card-wizard" data-color="green" id="wizardProfile">
-                            <form action="http://ndongoyi.herokuapp.com/talibe" method="POST" enctype="multipart/form-data">
+                            <form th:action="@{/savePoint}" method="post" th:object="${point}" enctype="multipart/form-data">
                                 <input type="hidden" name="_token" value="pN3Lzdlcy0IfVu672Q7zb5Kks0IPUDZAvkHpkaiY">                  <!--        You can switch " data-color="primary" "  with one of the next bright colors: "green", "orange", "red", "blue"       -->
                                 <div class="card-header text-center">
-                                    <h4 class="card-title">Talibé N° 469</h4>
-                                    <h5 class="card-description">Création d'un nouveau client.</h5>
-                                </div>
-                                <div class="wizard-navigation">
-                                    <ul class="nav nav-pills">
-                                        <li class="nav-item">
-                                            <a class="nav-link active" href="#about" data-toggle="tab" role="tab">
-                                                Etape 1
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#account" data-toggle="tab" role="tab">
-                                                Etape 2
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#address" data-toggle="tab" role="tab">
-                                                Etape 3
-                                            </a>
-                                        </li>
-                                    </ul>
+                                    <h4 class="card-title">Point N° 8</h4>
+                                    <h5 class="card-description">Création d'un nouveau point.</h5>
                                 </div>
                                 <div class="card-body">
                                     <div class="tab-content">
@@ -231,14 +212,6 @@
                                             <div class="row justify-content-center">
 
                                                 <div class="col-sm-6">
-                                                    <div class="picture-container">
-                                                        <div class="picture">
-                                                            <img src="../../assets/img/default-avatar.png" class="picture-src" id="wizardPicturePreview" title="" />
-                                                            <input type="file" id="wizard-picture" name="avatar">
-                                                        </div>
-                                                        <h6 class="category">avatar</h6>
-                                                    </div>
-
                                                     <div class="input-group form-control-lg">
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text">
@@ -246,8 +219,8 @@
                                                             </span>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label for="exampleInput1" class="bmd-label-floating">Prénom</label>
-                                                            <input type="text" class="form-control" name="prenomClient" value="" required>
+                                                            <label for="exampleInput1" class="bmd-label-floating">Poids perdus</label>
+                                                            <input type="text" class="form-control" name="poidsPerdus" required />
                                                         </div>
                                                     </div>
 
@@ -258,207 +231,118 @@
                                                             </span>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label for="exampleInput11" class="bmd-label-floating">Nom</label>
-                                                            <input type="text" class="form-control" name="nomClient" value="" required>
+                                                            <select class="selectpicker" data-style="select-with-transition" name="semaine" required>
+                                                                <option value=""><i class="fas fa-male"></i> Semaine</option>
+                                                                <option value="1"><i class="fas fa-male"></i> Semaine 1</option>
+                                                                <option value="2"><i class="fas fa-male"></i> Semaine 2</option>
+                                                                <option value="3"><i class="fas fa-male"></i> Semaine 3</option>
+                                                                <option value="4"><i class="fas fa-male"></i> Semaine 4</option>
+                                                                <option value="5"><i class="fas fa-male"></i> Semaine 5</option>
+                                                                <option value="6"><i class="fas fa-male"></i> Semaine 6</option>
+                                                                <option value="7"><i class="fas fa-male"></i> Semaine 7</option>
+                                                                <option value="8"><i class="fas fa-male"></i> Semaine 8</option>
+                                                                <option value="9"><i class="fas fa-male"></i> Semaine 9</option>
+                                                                <option value="10"><i class="fas fa-male"></i> Semaine 10</option>
+                                                                <option value="11"><i class="fas fa-male"></i> Semaine 11</option>
+                                                                <option value="12"><i class="fas fa-male"></i> Semaine 12</option>
+                                                                <option value="13"><i class="fas fa-male"></i> Semaine 13</option>
+                                                                <option value="14"><i class="fas fa-male"></i> Semaine 14</option>
+                                                                <option value="15"><i class="fas fa-male"></i> Semaine 15</option>
+                                                                <option value="16"><i class="fas fa-male"></i> Semaine 16</option>
+
+                                                            </select>
                                                         </div>
                                                     </div>
-                                                </div>
-
-                                                <div class="col-sm-6">
                                                     <div class="input-group form-control-lg">
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text">
                                                                 <i class="fas fa-weight-hanging"></i>
-                                                                </span>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="exampleInput1"
-                                                                   class="bmd-label-floating">Poids client</label>
-                                                            <input type="number" class="form-control" name="poidsClient"
-                                                                   value="" required>
-                                                        </div>
-                                                    </div>
-                                                    <div class="input-group form-control-lg">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text">
-                                                                <i class="fas fa-weight-hanging"></i>
-                                                                </span>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="exampleInput1"
-                                                                   class="bmd-label-floating">Objectif</label>
-                                                            <input type="number" class="form-control" name="objectif"
-                                                                   value="" required>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="input-group form-control-lg">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text">
-                                                                <i class="fas fa-long-arrow-alt-up"></i>
-                                                                </span>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="exampleInput1"
-                                                                   class="bmd-label-floating">Taille</label>
-                                                            <input type="number" class="form-control" name="taille"
-                                                                   value="" required>
-                                                        </div>
-                                                    </div>
-                                                    <div class="input-group form-control-lg">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text">
-                                                                <i class="fas fa-venus-mars"></i>
                                                             </span>
                                                         </div>
                                                         <div class="form-group">
-                                                            <select class="selectpicker"
-                                                                    data-style="select-with-transition" title="Sexe"
-                                                                    name="sexe" required>
-                                                                <option value="1"><i class="fas fa-male"></i> Homme
-                                                                </option>
-                                                                <option value="0"><i class="fas fa-female"></i> Femme
-                                                                </option>
+                                                            <select class="selectpicker" data-style="select-with-transition" name="routineAlimentaire" required>
+                                                                <option value=""><i class="fas fa-male"></i> Routine alimentaire</option>
+                                                                <option value="true"><i class="fas fa-male"></i> consolidée</option>
+                                                                <option value="false"><i class="fas fa-male"></i> non consolidée</option>
                                                             </select>
                                                         </div>
                                                     </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="tab-pane" id="account">
-                                            <div class="row justify-content-center">
-                                                <div class="col-lg-12">
-                                                    <div class="row">
-
-                                                        <div class="col-sm-6">
-                                                            <div class="input-group form-control-lg">
-                                                                <div class="input-group-prepend">
+                                                    <div class="input-group form-control-lg">
+                                                        <div class="input-group-prepend">
                                                             <span class="input-group-text">
                                                                 <i class="fas fa-weight-hanging"></i>
-                                                                </span>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="exampleInput1"
-                                                                           class="bmd-label-floating">Age</label>
-                                                                    <input type="text" class="form-control" name="ageClient"
-                                                                           value="" required>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="input-group form-control-lg">
-                                                                <div class="input-group-prepend">
-                                                                    <span class="input-group-text">
-                                                                        <i class="fas fa-envelope"></i>
-                                                                    </span>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="exampleInput11"
-                                                                           class="bmd-label-floating">Adresse email</label>
-                                                                    <input type="text" class="form-control"
-                                                                           name="emailClient" value="">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-sm-6">
-                                                            <div class="input-group form-control-lg">
-                                                                <div class="input-group-prepend">
-                                                                    <span class="input-group-text">
-                                                                      <i class="fas fa-mobile-alt"></i>
-                                                                    </span>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="exampleInput11"
-                                                                           class="bmd-label-floating">Téléphone</label>
-                                                                    <input type="text" class="form-control"
-                                                                           name="numClient" value="">
-                                                                </div>
-                                                            </div>
-                                                            <div class="input-group form-control-lg">
-                                                                <div class="input-group-prepend">
-                                                                <span class="input-group-text">
-                                                                    <i class="fas fa-map-marker-alt"></i>
-                                                                 </span>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label for="exampleInput11"
-                                                                           class="bmd-label-floating">Adresse</label>
-                                                                    <input type="text" class="form-control" value=""
-                                                                           name="adresse">
-                                                                </div>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="tab-pane" id="address">
-                                            <div class="row justify-content-center">
-                                                <div class="col-sm-6">
-                                                    <div class="input-group form-control-lg">
-                                                        <div class="input-group-prepend">
-                                                           <span class="input-group-text">
-                                                             <i class="fas fa-users"></i>
-                                                           </span>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="exampleInput11"
-                                                                   class="bmd-label-floating">Antécedent Familiaux</label>
-                                                            <input type="text" class="form-control" name="antFamilliaux" value="">
-                                                        </div>
-                                                    </div>
-                                                    <div class="input-group form-control-lg">
-                                                        <div class="input-group-prepend">
-                                                           <span class="input-group-text">
-                                                             <i class="fas fa-hospital"></i>
-                                                           </span>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="exampleInput11"
-                                                                   class="bmd-label-floating">Antécedent Médicaux</label>
-                                                            <input type="text" class="form-control" name="antMedicaux" value="">
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-sm-6">
-                                                    <div class="input-group form-control-lg">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text">
-                                                                <i class="fas fa-user-graduate"></i>
                                                             </span>
                                                         </div>
                                                         <div class="form-group">
-                                                            <select class="selectpicker" data-style="select-with-transition" title="Formule" name="formule">
-                                                                <option value="Basic">Basic</option>
-                                                                <option value="Silver">Silver</option>
-                                                                <option value="Gold">Gold</option>
+                                                            <select class="selectpicker" data-style="select-with-transition" name="hydratation" required>
+                                                                <option value=""><i class="fas fa-male"></i> Hydratation</option>
+                                                                <option value="true"><i class="fas fa-male"></i> consolidée</option>
+                                                                <option value="false"><i class="fas fa-male"></i> non consolidée</option>
                                                             </select>
                                                         </div>
                                                     </div>
+                                                </div>
+
+                                                <div class="col-sm-6">
 
                                                     <div class="input-group form-control-lg">
                                                         <div class="input-group-prepend">
-                                                           <span class="input-group-text">
-                                                               <i class="fas fa-book"></i>
-                                                           </span>
+                                                            <span class="input-group-text">
+                                                                <i class="fas fa-weight-hanging"></i>
+                                                            </span>
                                                         </div>
                                                         <div class="form-group">
-                                                            <select class="selectpicker" data-style="select-with-transition" title="Coach" name="coach">
-                                                                <option value="">Coach</option>
-                                                                <option value="Angèle">Angèle</option>
-                                                                <option value="Mamadou">Mamadou</option>
-                                                                <option value="Yaya">Yaya</option>
+                                                            <select class="selectpicker" data-style="select-with-transition" name="mindfulEating" required>
+                                                                <option value=""><i class="fas fa-male"></i> mindfulEating</option>
+                                                                <option value="true"><i class="fas fa-male"></i> consolidée</option>
+                                                                <option value="false"><i class="fas fa-male"></i> non consolidée</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="input-group form-control-lg">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">
+                                                                <i class="fas fa-weight-hanging"></i>
+                                                            </span>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <select class="selectpicker" data-style="select-with-transition" name="sport" required>
+                                                                <option value=""><i class="fas fa-male"></i> Sport</option>
+                                                                <option value="true"><i class="fas fa-male"></i> consolidée</option>
+                                                                <option value="false"><i class="fas fa-male"></i> non consolidée</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="input-group form-control-lg">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">
+                                                                <i class="fas fa-weight-hanging"></i>
+                                                            </span>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <select class="selectpicker" data-style="select-with-transition" name="sommeil" required>
+                                                                <option value=""><i class="fas fa-male"></i> Sommeil</option>
+                                                                <option value="true"><i class="fas fa-male"></i> consolidée</option>
+                                                                <option value="false"><i class="fas fa-male"></i> non consolidée</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="input-group form-control-lg">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">
+                                                                <i class="fas fa-weight-hanging"></i>
+                                                            </span>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <select class="selectpicker" data-style="select-with-transition" name="stresse" required>
+                                                                <option value=""><i class="fas fa-male"></i> Stress</option>
+                                                                <option value="true"><i class="fas fa-male"></i> consolidée</option>
+                                                                <option value="false"><i class="fas fa-male"></i> non consolidée</option>
                                                             </select>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-
                                             <div class="row justify-content-center">
                                                 <div class="col-lg-12">
                                                     <div class="input-group form-control-lg">
@@ -475,7 +359,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>
@@ -501,23 +384,8 @@
                 <nav class="float-left">
                     <ul>
                         <li>
-                            <a href="https://www.creative-tim.com">
-                                Creative Tim
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://creative-tim.com/presentation">
-                                About Us
-                            </a>
-                        </li>
-                        <li>
-                            <a href="http://blog.creative-tim.com">
-                                Blog
-                            </a>
-                        </li>
-                        <li>
-                            <a href="https://www.creative-tim.com/license">
-                                Licenses
+                            <a href="https://codouk.com">
+                                A propos
                             </a>
                         </li>
                     </ul>
