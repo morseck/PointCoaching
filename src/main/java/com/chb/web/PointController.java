@@ -6,15 +6,23 @@ import com.chb.dao.PointRepository;
 import com.chb.entities.*;
 import com.chb.metier.IPointMetier;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+@WebServlet("/PointController")
 @Controller
-public class PointController {
+public class PointController extends HttpServlet{
     @Autowired
     private ClientRepository clientRepository;
     @Autowired
@@ -24,17 +32,16 @@ public class PointController {
     @Autowired
     private IPointMetier pointMetier;
 
-    @RequestMapping("/listClient")
-    public String index(Model model) {
+    @RequestMapping("/tabClient")
+    public String index2(Model model) {
         try {
             List<Client> pageClients = clientRepository.findAll();
-            model.addAttribute("listClient", pageClients);
+            model.addAttribute("tabClient", pageClients);
         } catch (Exception e) {
             model.addAttribute("exception", e);
         }
-        return "listClient";
+        return "tabClient";
     }
-
 
     @RequestMapping("/consulterClient")
     public String consulter(Model model, String prenomClient) {
@@ -45,12 +52,14 @@ public class PointController {
            model.addAttribute("coachClient", coach);
            model.addAttribute("formule", formule);
            model.addAttribute("client", cl);
+           List<Point>  pagePoints = (List<Point>) cl.getPoints();
+           model.addAttribute("listPoint", pagePoints);
         } catch (Exception e) {
             model.addAttribute("exception", e);
         }
         return "profilClient";
     }
-
+//    ******************************* L'ajout d'une cliente ************************
     @RequestMapping(value = "/ajoutClient", method = RequestMethod.GET)
     public String form(Model model) {
         model.addAttribute("client", new Client());
@@ -58,9 +67,12 @@ public class PointController {
     }
 
     @RequestMapping(value = "/saveClient", method = RequestMethod.POST)
-    public String save(Client client) {
+    public String save(@Validated Client client, BindingResult bindingResult) {
         Coach coach = new Coach();
         Formule formule;
+        if(bindingResult.hasErrors()){
+            return "ajoutClient";
+        }
         clientRepository.save(client);
         client.setCoach(coach);
             if(client.getFormule().getCodeFormule() == 1){
@@ -72,22 +84,22 @@ public class PointController {
             else
                 formule = new Gold();
         client.setFormule(formule);
-        System.out.println(client.getCoach().getCodeCoach());
-        System.out.println(client.getPrenomClient());
         return "redirect:/listClient";
     }
+//    ************************** Mise à jour d'une cliente ************************
     @RequestMapping(value = "/editClient", method = RequestMethod.GET)
-    public String edit(Long codeClient, Model model) {
+    public String editCli(Long codeClient, Model model) {
         Client cl = clientRepository.findClientByCodeClient(codeClient);
         model.addAttribute("client", cl);
         return "editClient";
     }
     @RequestMapping(value = "/updateClient", method = RequestMethod.POST)
-    public String update(Client client) {
+    public String updateCli(Client client) {
         Coach coach = new Coach();
         Formule formule;
         clientRepository.save(client);
         client.setCoach(coach);
+        client.setCodeClient(client.getCodeClient());
         if(client.getFormule().getCodeFormule() == 1){
             formule = new Basic();
         }
@@ -97,7 +109,7 @@ public class PointController {
         else
             formule = new Gold();
         client.setFormule(formule);
-        return "redirect:/listClient";
+        return "redirect:/listClientsDuCoach";
     }
 
     @RequestMapping(value = "/deleteClient")
@@ -108,16 +120,38 @@ public class PointController {
     }
 
     @RequestMapping("/listClientsDuCoach")
-    public String clientCoach(Model model, String nomCoach) {
+    public String clientCoach(Model model, HttpServletRequest request) {
         try {
-            String username = nomCoach;
-//            Coach coach = coachRepository.consulterCoach(nomCoach);
-            List<Client> pageClients = pointMetier.listClientDuCoach(nomCoach);
-            model.addAttribute("listClient", pageClients);
+                String username = request.getUserPrincipal().getName();
+                List<Client> pageClients = pointMetier.listClientDuCoach(username);
+                model.addAttribute("listClients", pageClients);
+                return "listClientsCoach";
+
         } catch (Exception e) {
             model.addAttribute("exception", e);
         }
-        return "listClientsCoach";
+        return "403";
+    }
+    // ************************** Formulaire d'ajout pour les points ***************************************
+    @RequestMapping(value = "/ajoutPoint", method = RequestMethod.GET)
+    public String formPoint(Model model) {
+        model.addAttribute("point", new Point());
+        return "profilClient";
+    }
+    @RequestMapping(value = "/savePoint", method = RequestMethod.POST)
+    public String savePoint(Point point, Client client) {
+        Date date = new Date();
+        int i = point.getSemaine();
+        i = i + 1;
+        point.setDatePoint(date);
+        point.setClient(client);
+        point.setSemaine(i);
+        pointRepository.save(point);
+        return "redirect:/listClientsDuCoach";
+    }
+    @RequestMapping("/test")
+    public String tabBord(Model model) {
+        return "ajoutCoach";
     }
     // **************************** Formulaire d'ajout pour les coachs ****************************************
     @RequestMapping(value = "/ajoutCoach", method = RequestMethod.GET)
@@ -139,31 +173,5 @@ public class PointController {
             model.addAttribute("exception", e);
         }
         return "listCoach";
-    }
-    // ************************** Formulaire d'ajout pour les points ***************************************
-    @RequestMapping(value = "/ajoutPoint", method = RequestMethod.GET)
-    public String formPoint(Model model) {
-        model.addAttribute("point", new Point());
-        return "profilClient";
-    }
-    @RequestMapping(value = "/savePoint", method = RequestMethod.POST)
-    public String savePoint(Point point, Client client) {
-        point.setClient(client);
-        pointRepository.save(point);
-        return "redirect:/listPoint";
-    }
-    @RequestMapping("/listPoint")
-    public String listPoint(Model model) {
-        try {
-            List<Point> pagePoints = pointRepository.findAll();
-            model.addAttribute("listPoint", pagePoints);
-        } catch (Exception e) {
-            model.addAttribute("exception", e);
-        }
-        return "listPoint";
-    }
-    @RequestMapping("/test")
-    public String tabBord(Model model) {
-        return "ajoutCoach";
     }
 }

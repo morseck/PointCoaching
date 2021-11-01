@@ -1,17 +1,19 @@
 package com.chb.sec;
 
+import com.chb.entities.Coach;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 
+@WebServlet("/SecurityController")
 @Controller
-public class SecurityController {
+public class SecurityController extends HttpServlet {
 
-    @RequestMapping(value = "/login")
+    @RequestMapping(value = "/login" )
     public String login(){
         return "login";
     }
@@ -22,15 +24,17 @@ public class SecurityController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    @ResponseBody
-    public String home(Model model, Principal principal){
-        String name= principal.getName();
-        model.addAttribute("username", name);
-        return "redirect:/listClient";
+    public String home(HttpServletRequest request){
+        if(request.isUserInRole("USER"))
+        return "redirect:/listClientsDuCoach";
+        else if(request.isUserInRole("SUPERADMIN"))
+            return "redirect:/tabClient";
+        else
+            return "/403";
     }
 
-    @RequestMapping(value = "/404")
+    @RequestMapping(value = "/403")
     public String notAccess(){
-        return "notAuthorized";
+        return "403";
     }
 }

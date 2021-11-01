@@ -23,7 +23,6 @@ public class PointMetierImpl implements IPointMetier{
     @Autowired
     private CoachRepository coachRepository;
 
-
     @Override
     public Client consulterClient(String prenomClient) {
         Client cl = clientRepository.consulterClientDao(prenomClient);
@@ -37,29 +36,8 @@ public class PointMetierImpl implements IPointMetier{
         return cl;
     }
 
-
     @Override
-    public Page<Client> listClient(int page, int size) {
-        return clientRepository.listClient(PageRequest.of(page, size));
-    }
-
-    @Override
-    public Page<Point> listPoint(int page, int size) {
-        return null;
-    }
-
-   /* @Override
-    public Page<Client> listClient(int page, int size) {
-        return clientRepository.listClient(PageRequest.of(page, size));
-    }*/
-
-    /*@Override
-    public Page<Point> listPoint(String codeCoach, int page, int size) {
-        return null;
-    }
-*/
-    @Override
-    public Page<ResumeRdv> listResumeRdv(String codeCoach, int page, int size) {
+    public Page<ResumeRdv> listResumeRdv(String codeCoach) {
         return null;
     }
 

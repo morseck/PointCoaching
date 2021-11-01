@@ -3,7 +3,7 @@
                 xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
-    <title>Page d'accueil</title>
+    <title>Tableau clientes</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" type="text/css"
@@ -79,12 +79,6 @@
                     </div>
                 </li>
 
-                <li class="nav-item ">
-                    <a class="nav-link collapse" href="http://point">
-                        <i class="fas fa-shopping-cart"></i>
-                        <p> Formule </p>
-                    </a>
-                </li>
                 <li class="nav-item">
                     <a class="nav-link" data-toggle="collapse" href="#coach">
                         <i class="fas fa-user-tie"></i>
@@ -92,16 +86,6 @@
                     </a>
                     <div class="collapse" id="coach">
                         <ul class="nav">
-                            <li class="nav-item ">
-                                <!--<a class="nav-link" th:if="sec.#authentication=='angele'" th:href="@{/listClientsDuCoach(angele)}">
-                                    <span class="sidebar-mini"> L </span>
-                                    <span class="sidebar-normal"> LISTER </span>
-                                </a>-->
-                                <!--<a class="nav-link" th:if="sec:authentication=='mamadou'" th:href="@{/listClientsDuCoach(mamadou)}">
-                                    <span class="sidebar-mini"> L </span>
-                                    <span class="sidebar-normal"> LISTER </span>
-                                </a>-->
-                            </li>
                             <li class="nav-item ">
                                 <a class="nav-link" th:href="@{/ajoutCoach}">
                                     <span class="sidebar-mini"> N </span>
@@ -112,11 +96,6 @@
                                 <a class="nav-link" th:href="@{/listClientsCoach}">
                                     <span class="sidebar-mini"> N </span>
                                     <span class="sidebar-normal"> NOUVEAU
-                                    <form class="navbar-form" method="get" th:action="@{/listClientsDuCoach}">
-                                        <div class="input-group no-border">
-                                            <input type="text" name="nomCoach" th:value="angele" class="form-control" placeholder="Nom cliente...">
-                                        </div>
-                                    </form>
                                         </span>
                                 </a>
                             </li>
@@ -126,9 +105,7 @@
 
 
                 <li class="nav-item" style="margin-bottom: 300px">
-                    <a class="nav-link" data-toggle="collapse">
-                        <span sec:authentication="name" />
-                    </a>
+                        <a class="nav-link" data-toggle="collapse"></a>
                 </li>
             </ul>
         </div>
@@ -263,7 +240,7 @@
                                         </tr>
                                         </tfoot>
                                         <tbody>
-                                        <tr th:each="c:${listClient}">
+                                        <tr th:each="c:${tabClient}">
                                             <td><span th:text="${c.codeClient}"></span></td>
                                             <td><span th:text="${c.prenomClient}"></span></td>
                                             <td><span th:text="${c.nomClient}"></span></td>

@@ -3,7 +3,7 @@
                 xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
-    <title>Page d'accueil</title>
+    <title>Liste clientes pour coach</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" type="text/css"
@@ -27,7 +27,7 @@
 
             <ul class="nav">
                 <li class="nav-item active ">
-                    <a class="nav-link" th:href="@{/listClient}">
+                    <a class="nav-link" th:href="@{/listClientsDuCoach}">
                         <i class="fas fa-igloo"></i>
                         <p> Accueil </p>
                     </a>
@@ -40,7 +40,7 @@
                     <div class="collapse" id="client">
                         <ul class="nav">
                             <li class="nav-item ">
-                                <a class="nav-link" th:href="@{/listClient}">
+                                <a class="nav-link" th:href="@{/listClientsDuCoach}">
                                     <span class="sidebar-mini"> L </span>
                                     <span class="sidebar-normal"> LISTER </span>
                                 </a>
@@ -77,13 +77,6 @@
 
                         </ul>
                     </div>
-                </li>
-
-                <li class="nav-item ">
-                    <a class="nav-link collapse" href="http://point">
-                        <i class="fas fa-shopping-cart"></i>
-                        <p> Formule </p>
-                    </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" data-toggle="collapse" href="#coach">
@@ -247,7 +240,7 @@
                                         </tr>
                                         </tfoot>
                                         <tbody>
-                                        <tr th:each="c:${listClient}">
+                                        <tr th:each="c:${listClients}">
                                             <td><span th:text="${c.codeClient}"></span></td>
                                             <td><span th:text="${c.prenomClient}"></span></td>
                                             <td><span th:text="${c.nomClient}"></span></td>

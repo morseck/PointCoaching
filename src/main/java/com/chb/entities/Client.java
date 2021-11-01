@@ -1,24 +1,27 @@
 package com.chb.entities;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
+import com.sun.istack.NotNull;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
 
 @Entity
 public class Client implements Serializable {
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long codeClient;
     @Column(length = 25)
+    @NotNull
     private String nomClient;
     @Column(length = 25)
+    @NotNull
     private String prenomClient;
     private int ageClient;
+    @NotNull
     private double poidsClient;
+    @NotNull
     private double objectif;
     private double taille;
     private String sexe;
+    @NotNull
     private String emailClient;
     private String numClient;
     private String adresse;
@@ -47,6 +50,7 @@ public class Client implements Serializable {
         this.nomClient = nomClient;
         this.ageClient = ageClient;
         this.poidsClient = poidsClient;
+        this.poidsActuel = poidsClient;
         this.objectif = objectif;
         this.taille = taille;
         this.sexe = sexe;

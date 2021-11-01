@@ -43,7 +43,7 @@
                     <div class="collapse" id="client">
                         <ul class="nav">
                             <li class="nav-item ">
-                                <a class="nav-link" th:href="@{/listClient}">
+                                <a class="nav-link" th:href="@{/listClientsDuCoach}">
                                     <span class="sidebar-mini"> L </span>
                                     <span class="sidebar-normal"> LISTER </span>
                                 </a>
@@ -200,7 +200,7 @@
                     <!--      Wizard container        -->
                     <div class="wizard-container">
                         <div class="card card-wizard" data-color="green" id="wizardProfile">
-                            <form th:action="@{updateClient}" method="post" th:object="${client}" enctype="multipart/form-data">
+                            <form th:action="@{/updateClient}" method="post" th:object="${client}" enctype="multipart/form-data">
                                 <input type="hidden" name="_token" value="pN3Lzdlcy0IfVu672Q7zb5Kks0IPUDZAvkHpkaiY">                  <!--        You can switch " data-color="primary" "  with one of the next bright colors: "green", "orange", "red", "blue"       -->
                                 <div class="card-header text-center">
                                     <h4 class="card-title">Client N° 469</h4>
@@ -238,7 +238,11 @@
                                                         </div>
                                                         <h6 class="category">avatar</h6>
                                                     </div>-->
-
+                                                    <div class="input-group form-control-lg">
+                                                        <div class="form-group">
+                                                            <input type="hidden" class="form-control" name="codeClient" th:field="*{codeClient}"/>
+                                                        </div>
+                                                    </div>
                                                     <div class="input-group form-control-lg">
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text">

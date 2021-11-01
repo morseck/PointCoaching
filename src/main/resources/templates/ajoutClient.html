@@ -30,7 +30,7 @@
 
             <ul class="nav">
                 <li class="nav-item active ">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" th:href="@{/listClientsDuCoach}">
                         <i class="fas fa-igloo"></i>
                         <p> Accueil </p>
                     </a>
@@ -43,7 +43,7 @@
                     <div class="collapse" id="client">
                         <ul class="nav">
                             <li class="nav-item ">
-                                <a class="nav-link" th:href="@{/listClient}">
+                                <a class="nav-link" th:href="@{/listClientsDuCoach}">
                                     <span class="sidebar-mini"> L </span>
                                     <span class="sidebar-normal"> LISTER </span>
                                 </a>
@@ -203,7 +203,7 @@
                             <form th:action="@{/saveClient}" method="post" th:object="${client}" enctype="multipart/form-data">
                                 <input type="hidden" name="_token" value="pN3Lzdlcy0IfVu672Q7zb5Kks0IPUDZAvkHpkaiY">                  <!--        You can switch " data-color="primary" "  with one of the next bright colors: "green", "orange", "red", "blue"       -->
                                 <div class="card-header text-center">
-                                    <h4 class="card-title">Client N° 469</h4>
+                                    <h4 class="card-title" th:text="${client.getCodeClient()}"></h4>
                                     <h3 class="card-description">Création d'un nouveau client.</h3>
                                 </div>
                                 <div class="wizard-navigation">
@@ -248,6 +248,7 @@
                                                         <div class="form-group">
                                                             <label for="exampleInput1" class="bmd-label-floating">Prénom</label>
                                                             <input type="text" class="form-control" name="prenomClient" th:field="*{prenomClient}" required />
+                                                            <span class="text-danger" th:errors="${client.prenomClient}"></span>
                                                         </div>
                                                     </div>
 
@@ -260,6 +261,7 @@
                                                         <div class="form-group">
                                                             <label for="exampleInput11" class="bmd-label-floating">Nom</label>
                                                             <input type="text" class="form-control" name="nomClient" th:field="*{nomClient}" required />
+                                                            <span class="text-danger" th:errors="${client.nomClient}"></span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -275,6 +277,7 @@
                                                             <label for="exampleInput1"
                                                                    class="bmd-label-floating">Poids client</label>
                                                             <input type="number" class="form-control" name="poidsClient" required />
+                                                            <span class="text-danger" th:errors="${client.poidsClient}"></span>
                                                         </div>
                                                     </div>
                                                     <div class="input-group form-control-lg">
@@ -286,8 +289,8 @@
                                                         <div class="form-group">
                                                             <label for="exampleInput1"
                                                                    class="bmd-label-floating">Objectif</label>
-                                                            <input type="number" class="form-control" name="objectif"
-                                                                   required />
+                                                            <input type="number" class="form-control" name="objectif" required />
+                                                            <span class="text-danger" th:errors="${client.objectif}"></span>
                                                         </div>
                                                     </div>
 
@@ -302,6 +305,7 @@
                                                                    class="bmd-label-floating">Taille</label>
                                                             <input type="number" class="form-control" name="taille"
                                                                     required />
+                                                            <span class="text-danger" th:errors="${client.taille}"></span>
                                                         </div>
                                                     </div>
                                                     <div class="input-group form-control-lg">
@@ -341,6 +345,7 @@
                                                                     <label for="exampleInput1"
                                                                            class="bmd-label-floating">Age</label>
                                                                     <input type="text" class="form-control" name="ageClient" value="" required />
+                                                                    <span class="text-danger" th:errors="${client.ageClient}"></span>
                                                                 </div>
                                                             </div>
 
@@ -354,6 +359,7 @@
                                                                     <label for="exampleInput11"
                                                                            class="bmd-label-floating">Adresse email</label>
                                                                     <input type="text" class="form-control" name="emailClient" />
+                                                                    <span class="text-danger" th:errors="${client.emailClient}"></span>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -368,6 +374,7 @@
                                                                 <div class="form-group">
                                                                     <label for="exampleInput11" class="bmd-label-floating">Téléphone</label>
                                                                         <input type="text" class="form-control" name="numClient" />
+                                                                    <span class="text-danger" th:errors="${client.numClient}"></span>
                                                                 </div>
                                                             </div>
                                                             <div class="input-group form-control-lg">
@@ -380,6 +387,7 @@
                                                                     <label for="exampleInput11"
                                                                            class="bmd-label-floating">Adresse</label>
                                                                     <input type="text" class="form-control" name="adresse" />
+                                                                    <span class="text-danger" th:errors="${client.adresse}"></span>
                                                                 </div>
                                                             </div>
 
@@ -446,14 +454,14 @@
                                                                 <option value="" disabled>Coach</option>
                                                                 <option value="angele">Angèle</option>
                                                                 <option value="mamadou">Mamadou</option>
-                                                                <option value="yaya">Yaya</option>
+                                                                <option value="yayah">Yayah</option>
                                                             </select>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <!--<div class="row justify-content-center">
+                                            <div class="row justify-content-center">
                                                 <div class="col-lg-12">
                                                     <div class="input-group form-control-lg">
                                                         <div class="input-group-prepend">
@@ -468,7 +476,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>-->
+                                            </div>
 
                                         </div>
                                     </div>

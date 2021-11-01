@@ -1,5 +1,7 @@
 package com.chb.entities;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -8,6 +10,7 @@ import java.util.Date;
 public class Point implements Serializable {
     @Id @GeneratedValue
     private Long codePoint;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date datePoint;
     private double poidsPerdus;
     private int semaine;
