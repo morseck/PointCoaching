@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="fr" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+                xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
-    <title>Liste des coachs</title>
+    <title>Liste clientes par coach</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" type="text/css"
@@ -12,13 +13,186 @@
     <link href="../../assets/css/material-dashboard.css?v=2.0.2" rel="stylesheet"/>
     <style>
         .bas{
-            margin-top: 242px;
+            margin-top: 185px;
         }
     </style>
 </head>
 <body class="">
 <div class="wrapper">
+    <div class="sidebar" data-color="green" data-background-color="black">
+        <div class="logo">
+            <a href="#" class="simple-text logo-mini">
+                PC
+            </a>
+            <a href="#" class="simple-text logo-normal">
+                Point coaching
+            </a>
+        </div>
+        <div class="sidebar-wrapper">
+
+            <ul class="nav">
+                <li class="nav-item active ">
+                    <a class="nav-link" th:href="@{/listClientsDuCoach}">
+                        <i class="fas fa-igloo"></i>
+                        <p> Accueil </p>
+                    </a>
+                </li>
+
+                <li class="nav-item ">
+                    <a class="nav-link" data-toggle="collapse" href="#client">
+                        <i class="fas fa-user"></i>
+                        <p> Clients</p>
+                    </a>
+                    <div class="collapse" id="client">
+                        <ul class="nav">
+                            <li class="nav-item ">
+                                <a class="nav-link" th:href="@{/listClientsDuCoach}">
+                                    <span class="sidebar-mini"> L </span>
+                                    <span class="sidebar-normal"> LISTER </span>
+                                </a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link" th:href="@{/ajoutClient}">
+                                    <span class="sidebar-mini"> N </span>
+                                    <span class="sidebar-normal">NOUVEAU</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="nav-item ">
+                    <a class="nav-link" data-toggle="collapse" href="#point">
+                        <i class="fas fa-home"></i>
+                        <p> Points</p>
+                    </a>
+                    <div class="collapse" id="point">
+                        <ul class="nav">
+                            <li class="nav-item ">
+                                <a class="nav-link" th:href="@{/listPoint}">
+                                    <span class="sidebar-mini"> L </span>
+                                    <span class="sidebar-normal"> LISTER </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" data-toggle="collapse" href="#formule">
+                        <i class="fas fa-shopping-cart"></i>
+                        <p> Formule</p>
+                    </a>
+                    <div class="collapse" id="formule">
+                        <ul class="nav">
+                            <li class="nav-item ">
+                                <a class="nav-link" th:href="@{/listBasic}">
+                                    <span class="sidebar-mini"> B </span>
+                                    <span class="sidebar-normal"> BASIC </span>
+                                </a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link" th:href="@{/listSilver}">
+                                    <span class="sidebar-mini"> S </span>
+                                    <span class="sidebar-normal">SILVER</span>
+                                </a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link" th:href="@{/listGold}">
+                                    <span class="sidebar-mini"> G </span>
+                                    <span class="sidebar-normal">GOLd</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="collapse" href="#coach">
+                        <i class="fas fa-user-tie"></i>
+                        <p>Coachs</p>
+                    </a>
+                    <div class="collapse" id="coach">
+                        <ul class="nav">
+                            <li class="nav-item ">
+                                <a class="nav-link" th:href="@{/listCoach}">
+                                    <span class="sidebar-mini"> L </span>
+                                    <span class="sidebar-normal"> LISTER </span>
+                                </a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link" th:href="@{/ajoutCoach}" sec:authorize="hasRole('ROLE_SUPERADMIN')">
+                                    <span class="sidebar-mini"> N </span>
+                                    <span class="sidebar-normal"> NOUVEAU </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="nav-item active bas" >
+                    <a class="nav-link">
+                        <i class="fas fa-user-tie"></i>
+                        Coach <span sec:authentication="name"/>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
     <div class="main-panel">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top " id="navigation-example">
+            <div class="container-fluid">
+                <div class="navbar-wrapper">
+                    <div class="navbar-minimize">
+                        <button id="minimizeSidebar" class="btn btn-just-icon btn-white btn-fab btn-round">
+                            <i class="material-icons text_align-center visible-on-sidebar-regular">more_vert</i>
+                            <i class="material-icons design_bullet-list-67 visible-on-sidebar-mini">view_list</i>
+                        </button>
+                    </div>
+                </div>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation" data-target="#navigation-example">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="navbar-toggler-icon icon-bar"></span>
+                    <span class="navbar-toggler-icon icon-bar"></span>
+                    <span class="navbar-toggler-icon icon-bar"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end">
+                    <form class="navbar-form" method="get" th:action="@{/consulterClient}">
+                        <div class="input-group no-border">
+                            <input type="text" name="prenomClient" class="form-control" placeholder="Nom cliente...">
+                        </div>
+                    </form>
+                    <div class="text-danger" th:if="${exception}" th:text="${exception.message}"></div>
+                    <ul class="navbar-nav" style="padding-right:35px;padding-left: 50px;">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" title="Profil" id="navbarDropdownMenuLink"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-user-lock fa-3x"></i>
+                                <p class="d-lg-none d-md-block">
+                                    Administrateur
+                                </p>
+                            </a>
+                            <!-- dropdown -->
+                            <div class="dropdown-menu dropdown-menu-right text-black-50"
+                                 aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" href="#">
+                                    <span style="color: black">Mon compte</span>
+                                </a>
+
+                                <a class="dropdown-item" th:href="@{/logout}"
+                                   onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                    <span style="color: black">Déconnexion</span>
+                                </a>
+
+                                <form id="logout-form" th:action="@{/logout}" method="POST" style="display: none;">
+                                    <input type="hidden" name="_token" value="pN3Lzdlcy0IfVu672Q7zb5Kks0IPUDZAvkHpkaiY">                                    </form>
+                            </div>
+                            <!-- dropdown end -->
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
@@ -50,7 +224,7 @@
                                 <div class="card-icon">
                                     <i class="fas fa-user m-1" style="font-size: x-large"></i>
                                 </div>
-                                <h4 class="card-title">Liste des coachs</h4>
+                                <h4 class="card-title">Liste des clientes</h4>
                             </div>
                             <div class="card-body">
                                 <div class="toolbar">
@@ -60,41 +234,49 @@
                                     <table id="datatables" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                                         <thead>
                                         <tr>
-                                            <th class="col-md-2">Prénom</th>
-                                            <th class="col-md-2">Nbr de clientes</th>
-                                            <th class="col-md-2">Nbr de points</th>
-                                            <th class="col-md-2">Gold</th>
-                                            <th class="col-md-2">Silver</th>
-                                            <th class="col-md-2">Basic</th>
+                                            <th>ID</th>
+                                            <th>Prénom</th>
+                                            <th>Nom</th>
+                                            <th>Poids client</th>
+                                            <th>Objectif</th>
+                                            <th>Taille</th>
+                                            <th>Age</th>
+                                            <th>Téléphone</th>
+                                            <th>Email</th>
+                                            <th>Sexe</th>
                                             <th class="text-right">Actions</th>
-
                                         </tr>
                                         </thead>
                                         <tfoot>
                                         <tr>
+                                             <th>ID</th>
                                             <th>Prénom</th>
-                                            <th class="col-md-2">Nbr de clientes</th>
-                                            <th class="col-md-2">Nbr de points</th>
-                                            <th class="col-md-2">Gold</th>
-                                            <th class="col-md-2">Silver</th>
-                                            <th class="col-md-2">Basic</th>
-
-                                            <!--                                            <th class="text-right">Actions</th>-->
+                                            <th>Nom</th>
+                                            <th>Poids client</th>
+                                            <th>Objectif</th>
+                                            <th>Taille</th>
+                                            <th>Age</th>
+                                            <th>Téléphone</th>
+                                            <th>Email</th>
+                                            <th>Sexe</th>
+                                            <th class="text-right">Actions</th>
                                         </tr>
                                         </tfoot>
                                         <tbody>
-                                        <tr >
-                                            <td><span th:text="${coach.nomCoach}"></span></td>
-                                            <td><span th:text="${coach.getClients().size()}"></span></td>
-                                            <td><span th:text="${coach.getPoints().size()}"></span></td>
-                                            <td><span th:text="${clG.size()}"></span></td>
-                                            <td><span th:text="${clS.size()}"></span></td>
-                                            <td><span th:text="${clB.size()}"></span></td>
-
+                                        <tr th:each="c:${listBas}">
+                                            <td><span th:text="${c.codeClient}"></span></td>
+                                            <td><span th:text="${c.prenomClient}"></span></td>
+                                            <td><span th:text="${c.nomClient}"></span></td>
+                                            <td><span th:text="${c.poidsClient}"></span></td>
+                                            <td><span th:text="${c.objectif}"></span></td>
+                                            <td><span th:text="${c.taille}"></span></td>
+                                            <td><span th:text="${c.ageClient}"></span></td>
+                                            <td><span th:text="${c.numClient}"></span></td>
+                                            <td><span th:text="${c.emailClient}"></span></td>
+                                            <td><span th:text="${c.sexe}"></span></td>
                                             <td class="text-right&">
-                                                <a th:href="@{/consulterClient}" class="btn btn-link btn-info btn-just-icon like"><i class="material-icons">favorite</i></a>
-                                                <!--<a href="#" class="btn btn-link btn-warning btn-just-icon edit"><i class="material-icons">dvr</i></a>
-                                                <a href="#" class="btn btn-link btn-danger btn-just-icon remove"><i class="material-icons">close</i></a>-->
+                                                <a th:href="@{'/consulterClient?prenomClient='+${c.prenomClient}}" class="btn btn-link btn-info btn-just-icon like"><i class="material-icons">favorite</i></a>
+                                                <a th:href="@{'/editClient?codeClient='+${c.codeClient}}" class="btn btn-link btn-warning btn-just-icon edit"><i class="material-icons">dvr</i></a>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -116,7 +298,7 @@
                 <nav class="float-left">
                     <ul>
                         <li>
-                            <a href="https://codouk.com/presentation">
+                                <a href="https://codouk.com/presentation">
                                 A propos
                             </a>
                         </li>

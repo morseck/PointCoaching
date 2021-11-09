@@ -16,4 +16,7 @@ public interface IPointMetier {
     public Page<ResumeRdv> listResumeRdv(String codeCoach);
     public List<Client> listClientDuCoach(String nomCoach);
     public Coach consulterCoach(String nomCoach);
+    public List<Point> listPoints(String nomCoach);
+    public List<Client> ClienteFormule(Long codeFormule, String codeCoach);
+    public List<Client> findClFormCoach(Long codeFormule, String coach);
 }

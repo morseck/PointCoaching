@@ -12,11 +12,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -73,6 +71,7 @@ public class PointController extends HttpServlet{
         if(bindingResult.hasErrors()){
             return "ajoutClient";
         }
+        client.setPoidsActuel(client.getPoidsClient());
         clientRepository.save(client);
         client.setCoach(coach);
             if(client.getFormule().getCodeFormule() == 1){
@@ -84,7 +83,7 @@ public class PointController extends HttpServlet{
             else
                 formule = new Gold();
         client.setFormule(formule);
-        return "redirect:/listClient";
+        return "redirect:/listClientsDuCoach";
     }
 //    ************************** Mise à jour d'une cliente ************************
     @RequestMapping(value = "/editClient", method = RequestMethod.GET)
@@ -147,11 +146,22 @@ public class PointController extends HttpServlet{
         point.setClient(client);
         point.setSemaine(i);
         pointRepository.save(point);
+        Point p = point;
+        Client client1 = client;
+        System.out.println("***********   "+point.getClient().getPrenomClient()+"   cccccccccccccccccccc");
+        /*String username = request.getUserPrincipal().getName();
+        Coach coach = coachRepository.consulterCoach(username);
+        System.out.println("***********   "+coach.getNomCoach()+"   ddddddddddddddddddddddddddd");*/
+
+        client.setPoidsActuel(client.getPoidsActuel()-point.getPoidsPerdus());
         return "redirect:/listClientsDuCoach";
     }
-    @RequestMapping("/test")
-    public String tabBord(Model model) {
-        return "ajoutCoach";
+    @RequestMapping("/listPoint")
+    public String tabPoints(Model model, HttpServletRequest request) {
+        String username = request.getUserPrincipal().getName();
+        List<Point> tabPoints = pointMetier.listPoints(username);
+        model.addAttribute("listPoint", tabPoints);
+        return "listPoint";
     }
     // **************************** Formulaire d'ajout pour les coachs ****************************************
     @RequestMapping(value = "/ajoutCoach", method = RequestMethod.GET)
@@ -165,13 +175,40 @@ public class PointController extends HttpServlet{
         return "redirect:/listCoach";
     }
     @RequestMapping("/listCoach")
-    public String listCocach(Model model) {
+    public String listCocach(Model model, HttpServletRequest request) {
         try {
-            List<Coach> pageCoachs = coachRepository.findAll();
-            model.addAttribute("listCoach", pageCoachs);
+            String username = request.getUserPrincipal().getName();
+            Coach coach = coachRepository.consulterCoach(username);
+            model.addAttribute("coach", coach);
+
+            model.addAttribute("clB", pointMetier.ClienteFormule(1L,username));
+            model.addAttribute("clS", pointMetier.ClienteFormule(2L,username));
+            model.addAttribute("clG", pointMetier.ClienteFormule(3L,username));
         } catch (Exception e) {
             model.addAttribute("exception", e);
         }
         return "listCoach";
+    }
+    // Liste des etudiant nen fonction d'une formule
+    @RequestMapping(value = "/listBasic")
+    public String tabBasic(Model model, HttpServletRequest request) {
+        String username = request.getUserPrincipal().getName();
+        List<Client> tabClient = pointMetier.findClFormCoach(1L, username);
+        model.addAttribute("listBas", tabClient);
+        return "listBasic";
+    }
+    @RequestMapping(value = "/listSilver")
+    public String tabSilver(Model model, HttpServletRequest request) {
+        String username = request.getUserPrincipal().getName();
+        List<Client> tabClient = pointMetier.findClFormCoach(2L, username);
+        model.addAttribute("listSil", tabClient);
+        return "listSilver";
+    }
+    @RequestMapping(value = "/listGold")
+    public String tabGold(Model model, HttpServletRequest request) {
+        String username = request.getUserPrincipal().getName();
+        List<Client> tabClient = pointMetier.findClFormCoach(3L, username);
+        model.addAttribute("listGol", tabClient);
+        return "listGold";
     }
 }

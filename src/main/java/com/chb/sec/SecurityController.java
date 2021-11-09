@@ -20,7 +20,7 @@ public class SecurityController extends HttpServlet {
 
     @RequestMapping(value = "/logout")
     public String logout(){
-        return "login";
+        return "redirect:/login";
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)

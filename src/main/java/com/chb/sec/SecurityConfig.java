@@ -38,8 +38,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.formLogin().loginPage("/login");
-        http.authorizeRequests().antMatchers("/listClient","/listPoint","/listCoach","/ajoutCoach").hasRole("SUPERADMIN");
-        http.authorizeRequests().antMatchers("/consulterClient","/ajoutClient","/editClient","/saveClient","/updateClient").hasRole("USER");
+        http.authorizeRequests().antMatchers("/tabClient").hasRole("SUPERADMIN");
+        http.authorizeRequests().antMatchers("/ajoutClient","/editClient","/saveClient","/updateClient", "/deleteClient","/logout").hasRole("USER");
         http.exceptionHandling().accessDeniedPage("/403");
 
         // Toutes les requetes necessitent de passer par une authentification

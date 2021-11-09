@@ -15,6 +15,11 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <!-- CSS Files -->
     <link href="../../assets/css/material-dashboard.css?v=2.0.2" rel="stylesheet" />
+    <style>
+        .bas{
+            margin-top: 242px;
+        }
+    </style>
 </head>
 
 <body class="">
@@ -83,7 +88,34 @@
                         </ul>
                     </div>
                 </li>
-
+                <li class="nav-item ">
+                    <a class="nav-link" data-toggle="collapse" href="#formule">
+                        <i class="fas fa-shopping-cart"></i>
+                        <p> Formule</p>
+                    </a>
+                    <div class="collapse" id="formule">
+                        <ul class="nav">
+                            <li class="nav-item ">
+                                <a class="nav-link" th:href="@{/listBasic}">
+                                    <span class="sidebar-mini"> B </span>
+                                    <span class="sidebar-normal"> BASIC </span>
+                                </a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link" th:href="@{/listSilver}">
+                                    <span class="sidebar-mini"> S </span>
+                                    <span class="sidebar-normal">SILVER</span>
+                                </a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link" th:href="@{/listGold}">
+                                    <span class="sidebar-mini"> G </span>
+                                    <span class="sidebar-normal">GOLd</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" data-toggle="collapse" href="#coach">
                         <i class="fas fa-user-tie"></i>
@@ -97,7 +129,7 @@
                                     <span class="sidebar-normal"> LISTER </span>
                                 </a>
                             </li>
-                            <li class="nav-item ">
+                            <li class="nav-item" sec:authorize="hasRole('ROLE_SUPERADMIN')">
                                 <a class="nav-link" th:href="@{/ajoutCoach}">
                                     <span class="sidebar-mini"> N </span>
                                     <span class="sidebar-normal"> NOUVEAU </span>
@@ -105,6 +137,12 @@
                             </li>
                         </ul>
                     </div>
+                </li>
+                <li class="nav-item active bas" >
+                    <a class="nav-link">
+                        <i class="fas fa-user-tie"></i>
+                        Coach <span sec:authentication="name"/>
+                    </a>
                 </li>
             </ul>
         </div>
@@ -247,7 +285,7 @@
                                             <th th:text="${p.sport}"></th>
                                             <th th:text="${p.sommeil}"></th>
                                             <th th:text="${p.stress}"></th>
-                                            <th th:text="${p.client.poidsActuel}"></th>
+                                            <th th:text="${p.getClient().poidsActuel}"></th>
                                             <th th:text="${p.datePoint}"></th>
                                         </tr>
                                         </tbody>
@@ -278,23 +316,24 @@
                                                 <div class="col-md-6 col-sm-12">
                                                     <div class="input-group">
                                                         <div class="input-group-prepend">
-                                                    <span class="input-group-text">
-                                                     <i class="fas fa-user-md"></i>
-                                                    </span>
+                                                            <span class="input-group-text">
+                                                            <i class="fas fa-user-md"></i>
+                                                            </span>
                                                         </div>
                                                         <div class="form-group" style="width: 80%">
                                                             <label class="bmd-label-floating">Poids perdus</label>
                                                             <input type="text" class="form-control" name="poidsPerdus" required />
                                                         </div>
+
                                                     </div>
                                                     <div class="input-group form-control-lg">
                                                         <input type="hidden" name="semaine" th:value="${client.getPoints().size()}">
                                                     </div>
                                                     <div class="input-group form-control-lg">
                                                         <div class="input-group-prepend">
-                                                <span class="input-group-text">
-                                                 <i class="fas fa-calendar"></i>
-                                                </span>
+                                                            <span class="input-group-text">
+                                                            <i class="fas fa-calendar"></i>
+                                                            </span>
                                                         </div>
                                                         <div class="form-group" style="width: 80%">
                                                             <select class="selectpicker" data-style="select-with-transition" name="routineAlimentaire" required>
@@ -436,8 +475,8 @@
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <p class="text-center">
-                                                                <button type="button" class="btn btn-round btn-outline-success" data-toggle="modal" data-target="#modalConsultation" th:href="@{/ajoutPoint}"><i class="fas fa-medkit"></i> Nouveau point</button>
-                                                                <button type="button" class="btn btn-round btn-outline-info button_rapport"><i class="fas fa-stethoscope"></i> <span id="libelle">Voir bulletin du client</span></button>
+                                                                <button type="button" class="btn btn-round btn-outline-success" data-toggle="modal" data-target="#modalConsultation" th:href="@{/ajoutPoint}" sec:authorize="hasRole('ROLE_USER')" th:if="${client}"><i class="fas fa-medkit"></i> Nouveau point</button>
+                                                                <button type="button" class="btn btn-round btn-outline-info button_rapport" th:if="${client}"><i class="fas fa-stethoscope"></i> <span id="libelle">Voir bulletin du client</span></button>
                                                             </p>
                                                         </div>
                                                     </div>
@@ -490,14 +529,14 @@
                                         </div>
                                         <div class="card-footer">
                                             <div class="row">
-                                                <div class="col-lg-4">
+                                                <div class="col-lg-4" sec:authorize="hasRole('ROLE_USER')">
                                                     <a class="btn btn-info" th:href="@{/editClient(codeClient=${client.codeClient})}"><i class="fas fa-user-edit"></i> Editer</a>
                                                 </div>
-                                                <div class="col-lg-4">
+                                                <div class="col-lg-4" sec:authorize="hasRole('ROLE_USER')">
                                                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deletmodal"><i class="fas fa-trash-alt"></i> Supprimer</button>
                                                 </div>
-                                                <div class="col-lg-4">
-                                                    <a class="btn btn-default" th:href="@{/listClient}"><i class="fas fa-user-edit"></i> Liste des clientes</a>
+                                                <div class="col-lg-4" sec:authorize="hasRole('ROLE_USER')">
+                                                    <a class="btn btn-default" th:href="@{/listClientsDuCoach}"><i class="fas fa-user-edit"></i> Liste des clientes</a>
                                                 </div>
                                             </div>
                                         </div>

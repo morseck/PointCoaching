@@ -6,7 +6,7 @@ import java.util.Collection;
 
 @Entity
 public class Client implements Serializable {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue
     private Long codeClient;
     @Column(length = 25)
     @NotNull

@@ -13,12 +13,30 @@ public class Coach implements Serializable {
     private String nomCoach;
     @OneToMany(mappedBy = "coach", fetch = FetchType.LAZY)
     private Collection<Client> clients;
+
+    public Collection<Client> getClients() {
+        return clients;
+    }
+
+    public void setClients(Collection<Client> clients) {
+        this.clients = clients;
+    }
+
+    public Collection<Point> getPoints() {
+        return points;
+    }
+
+    public void setPoints(Collection<Point> points) {
+        this.points = points;
+    }
+
     @OneToMany(mappedBy = "coach", fetch = FetchType.LAZY)
     private Collection<Point> points;
 
     public Coach() {
         super();
     }
+
     public Coach(String codeCoach) {
         super();
         this.codeCoach = codeCoach;

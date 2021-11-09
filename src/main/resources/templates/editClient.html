@@ -4,8 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>
-        Point coaching inscription  </title>
+    <title>Mis à jour d'une cliente</title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
     <!--     Fonts and icons     -->
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
@@ -13,6 +12,11 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <!-- CSS Files -->
     <link href="../../assets/css/material-dashboard.css?v=2.0.2" rel="stylesheet" />
+    <style>
+        .bas{
+            margin-top: 242px;
+        }
+    </style>
 </head>
 
 <body class="">
@@ -30,7 +34,7 @@
 
             <ul class="nav">
                 <li class="nav-item active ">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" th:href="@{/listClientsDuCoach}">
                         <i class="fas fa-igloo"></i>
                         <p> Accueil </p>
                     </a>
@@ -83,10 +87,32 @@
                 </li>
 
                 <li class="nav-item ">
-                    <a class="nav-link collapse" th:href="@{/listFormule}">
+                    <a class="nav-link" data-toggle="collapse" href="#formule">
                         <i class="fas fa-shopping-cart"></i>
-                        <p> Formule </p>
+                        <p> Formule</p>
                     </a>
+                    <div class="collapse" id="formule">
+                        <ul class="nav">
+                            <li class="nav-item ">
+                                <a class="nav-link" th:href="@{/listBasic}">
+                                    <span class="sidebar-mini"> B </span>
+                                    <span class="sidebar-normal"> BASIC </span>
+                                </a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link" th:href="@{/listSilver}">
+                                    <span class="sidebar-mini"> S </span>
+                                    <span class="sidebar-normal">SILVER</span>
+                                </a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link" th:href="@{/listGold}">
+                                    <span class="sidebar-mini"> G </span>
+                                    <span class="sidebar-normal">GOLd</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" data-toggle="collapse" href="#coach">
@@ -109,6 +135,12 @@
                             </li>
                         </ul>
                     </div>
+                </li>
+                <li class="nav-item active bas" >
+                    <a class="nav-link">
+                        <i class="fas fa-user-tie"></i>
+                        Coach <span sec:authentication="name"/>
+                    </a>
                 </li>
             </ul>
         </div>
