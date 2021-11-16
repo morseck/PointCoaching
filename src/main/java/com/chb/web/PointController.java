@@ -145,17 +145,40 @@ public class PointController extends HttpServlet{
         point.setDatePoint(date);
         point.setClient(client);
         point.setSemaine(i);
+//        point.getResumeRdv().setNoteResumeRdv("Pas encore");
+        pointRepository.save(point);
+        Point p = point;
+        Client client1 = client;
+        client.setPoidsActuel(client.getPoidsActuel()-point.getPoidsPerdus());
+        return "redirect:/listClientsDuCoach";
+    }
+    // Mise à jour d'un point
+    @RequestMapping(value = "/editPoint", method = RequestMethod.GET)
+    public String editPoint(Model model, Long codePoint) {
+        System.out.println("*a*a*a*a*a*a*a*a*a*a*   "+codePoint+" xxereexxexexexexexexRxexxxx");
+        Point p = pointRepository.consulterPointCode(codePoint);
+        model.addAttribute("point", p);
+        System.out.println("*a*a*a*a*a*a*a*a*a*a*  yyyeyyyeyeyyyeyeye");
+
+        return "profilClient";
+    }
+    @RequestMapping(value = "/updatePoint", method = RequestMethod.POST)
+    public String updatePoint(Point point, Client client) {
+        Date date = new Date();
+        int i = point.getSemaine();
+        point.setDatePoint(date);
+        point.setClient(client);
+        point.setSemaine(i);
         pointRepository.save(point);
         Point p = point;
         Client client1 = client;
         System.out.println("***********   "+point.getClient().getPrenomClient()+"   cccccccccccccccccccc");
-        /*String username = request.getUserPrincipal().getName();
-        Coach coach = coachRepository.consulterCoach(username);
-        System.out.println("***********   "+coach.getNomCoach()+"   ddddddddddddddddddddddddddd");*/
-
         client.setPoidsActuel(client.getPoidsActuel()-point.getPoidsPerdus());
         return "redirect:/listClientsDuCoach";
     }
+
+
+
     @RequestMapping("/listPoint")
     public String tabPoints(Model model, HttpServletRequest request) {
         String username = request.getUserPrincipal().getName();
@@ -163,6 +186,14 @@ public class PointController extends HttpServlet{
         model.addAttribute("listPoint", tabPoints);
         return "listPoint";
     }
+
+    @RequestMapping(value = "/deletePoint")
+    public String deletePt(Long codePoint){
+       Point p = pointRepository.consulterPointCode(codePoint);
+        pointRepository.delete(p);
+        return "redirect:/profilClient";
+    }
+
     // **************************** Formulaire d'ajout pour les coachs ****************************************
     @RequestMapping(value = "/ajoutCoach", method = RequestMethod.GET)
     public String formCoach(Model model) {
@@ -180,7 +211,6 @@ public class PointController extends HttpServlet{
             String username = request.getUserPrincipal().getName();
             Coach coach = coachRepository.consulterCoach(username);
             model.addAttribute("coach", coach);
-
             model.addAttribute("clB", pointMetier.ClienteFormule(1L,username));
             model.addAttribute("clS", pointMetier.ClienteFormule(2L,username));
             model.addAttribute("clG", pointMetier.ClienteFormule(3L,username));

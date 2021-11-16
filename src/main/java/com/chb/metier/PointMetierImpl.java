@@ -6,10 +6,7 @@ import com.chb.dao.PointRepository;
 import com.chb.entities.Client;
 import com.chb.entities.Coach;
 import com.chb.entities.Point;
-import com.chb.entities.ResumeRdv;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,11 +34,6 @@ public class PointMetierImpl implements IPointMetier{
     public Client findClientByCodeClient(Long codeClient) {
         Client cl = clientRepository.findClientByCodeClient(codeClient);
         return cl;
-    }
-
-    @Override
-    public Page<ResumeRdv> listResumeRdv(String codeCoach) {
-        return null;
     }
 
     @Override
@@ -81,6 +73,14 @@ public class PointMetierImpl implements IPointMetier{
             return clientRepository.findClFormCoach(codeFormule, codeCoach);
         else
             return clientRepository.findClFormCoach(codeFormule, codeCoach);
+    }
+
+    @Override
+    public Point consulterPoint(Long codePoint) {
+        Point point = pointRepository.consulterPointCode(codePoint);
+        if(codePoint==null)
+            throw new RuntimeException("Le point est introuvable");
+        return point;
     }
 
 }

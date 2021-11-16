@@ -10,4 +10,7 @@ import java.util.List;
 public interface PointRepository extends JpaRepository<Point, Long> {
     @Query("select p from Point p where p.coach.nomCoach=:x")
     public List<Point> listPoint(@Param("x")String username);
+
+    @Query("select p from Point p where p.codePoint=:x")
+    public Point consulterPointCode(@Param("x")Long codePoint);
 }

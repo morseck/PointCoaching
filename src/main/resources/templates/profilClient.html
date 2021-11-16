@@ -259,6 +259,7 @@
                                             <th>Stress</th>
                                             <th>Poids actuels</th>
                                             <th>Date point</th>
+                                            <th class="text-right">Actions</th>
                                         </tr>
                                         </thead>
                                         <tfoot>
@@ -273,6 +274,7 @@
                                                 <th>Stress</th>
                                                 <th>Poids actuels</th>
                                                 <th>Date point</th>
+                                                <th class="text-right">Actions</th>
                                             </tr>
                                         </tfoot>
                                         <tbody>
@@ -287,6 +289,10 @@
                                             <th th:text="${p.stress}"></th>
                                             <th th:text="${p.getClient().poidsActuel}"></th>
                                             <th th:text="${p.datePoint}"></th>
+                                            <td class="text-right&">
+                                                <a class="btn btn-link btn-warning btn-just-icon edit" data-toggle="modal" data-target="#modalResume" sec:authorize="hasRole('ROLE_USER')" th:href="@{'/editPoint?codePoint='+${p.codePoint}}"  ><i class="material-icons">dvr</i></a>
+                                                <a class="btn btn-link btn-warning btn-just-icon edit" data-toggle="modal" data-target="#deletmodal" sec:authorize="hasRole('ROLE_USER')" th:href="@{'/deletePoint?codePoint='+${p.codePoint}}"  ><i class="fas fa-trash-alt"></i></a>
+                                            </td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -297,6 +303,7 @@
                     </div>
                 </div>
                 <!--Fin du bulletin de Point-->
+
                 <!--************************** CLASSE MODALE POUR LE FORMULAIRE DE CONSULTATION **************************-->
                 <div class="row">
                     <div class="col-md-12">
@@ -403,20 +410,10 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="input-group form-control-lg">
-                                                        <div class="input-group-prepend">
-                                                <span class="input-group-text">
-                                                 <i class="fas fa-stethoscope"></i>
-                                                </span>
-                                                        </div>
-                                                        <div class="form-group" style="width: 80%">
-                                                            <select class="selectpicker" data-style="select-with-transition" name="stress" required>
-                                                                <option value=""><i class="fas fa-male"></i> Stress</option>
-                                                                <option value="true"><i class="fas fa-male"></i> consolidée</option>
-                                                                <option value="false"><i class="fas fa-male"></i> non consolidée</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
+                                                    <!--<div class="input-group form-control-lg">
+                                                        <input type="text" class="form-control" name="poidsPerdus" required />
+
+                                                    </div>-->
                                                     <input name="formule.codeFormule" th:value="1" th:if="${client.getFormule().class.simpleName}=='Basic'" style="visibility:hidden;"/>
                                                     <input name="formule.codeFormule" th:value="2" th:if="${client.getFormule().class.simpleName}=='Silver'" style="visibility:hidden;"/>
                                                     <input name="formule.codeFormule" th:value="3" th:if="${client.getFormule().class.simpleName}=='Gold'" style="visibility:hidden;"/>
@@ -436,8 +433,8 @@
                                                             </span>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label for="infosSupp" style="color: #4CAF50 !important;">Infos supplémentaire</label>
-                                                            <textarea class="form-control" id="infosSupp" name="infosSupp" rows="3" style="width: 115% !important;"
+                                                            <label for="infosSupplementaire" style="color: #4CAF50 !important;">Infos supplémentaire</label>
+                                                            <textarea class="form-control" id="infosSupplementaire" name="infosSupplementaire" rows="3" style="width: 115% !important;"
                                                             ></textarea>
                                                         </div>
                                                     </div>
@@ -454,7 +451,155 @@
                         </div>
                     </div>
                 </div>
+                <!--************************** CLASSE MODALE POUR L'AJOUT DU RESUME**************************-->
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- Classic Modal -->
+                        <div class="modal fade" id="modalResume" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-success text-white">
+                                        <h4 class="modal-title">L'ajout du resumé <strong th:text="${client.prenomClient}+'  '+${client.nomClient}"><b></b></strong></h4>
+                                        <button type="button" class="close text-danger" data-dismiss="modal" aria-hidden="true">
+                                            <i class="material-icons" style="font-size: 1em;">clear</i>
+                                        </button>
+                                    </div>
+                                    <form method="POST" enctype="multipart/form-data" th:action="@{/updatePoint}" th:object="${point}">
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-md-6 col-sm-12">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">
+                                                            <i class="fas fa-user-md"></i>
+                                                            </span>
+                                                        </div>
+                                                        <div class="form-group" style="width: 80%">
+                                                            <label class="bmd-label-floating">Poids perdus</label>
+                                                            <input type="text" class="form-control" name="poidsPerdus" required />
+                                                        </div>
 
+                                                    </div>
+                                                    <div class="input-group form-control-lg">
+                                                        <input type="hidden" name="semaine" th:value="${client.getPoints().size()}">
+                                                    </div>
+                                                    <div class="input-group form-control-lg">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">
+                                                            <i class="fas fa-calendar"></i>
+                                                            </span>
+                                                        </div>
+                                                        <div class="form-group" style="width: 80%">
+                                                            <select class="selectpicker" data-style="select-with-transition" name="routineAlimentaire" required>
+                                                                <option value=""><i class="fas fa-male"></i> Routine alimentaire</option>
+                                                                <option value="true"><i class="fas fa-male"></i> consolidée</option>
+                                                                <option value="false"><i class="fas fa-male"></i> non consolidée</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="input-group form-control-lg">
+                                                        <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                 <i class="fas fa-calendar"></i>
+                                                </span>
+                                                        </div>
+                                                        <div class="form-group" style="width: 80%">
+                                                            <select class="selectpicker" data-style="select-with-transition" name="hydratation" required>
+                                                                <option value=""><i class="fas fa-male"></i> Hydratation</option>
+                                                                <option value="true"><i class="fas fa-male"></i> consolidée</option>
+                                                                <option value="false"><i class="fas fa-male"></i> non consolidée</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="input-group form-control-lg">
+                                                        <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                 <i class="fas fa-medkit"></i>
+                                                </span>
+                                                        </div>
+                                                        <div class="form-group" style="width: 80%">
+                                                            <select class="selectpicker" data-style="select-with-transition" name="mindfulEating" required>
+                                                                <option value=""><i class="fas fa-male"></i> mindfulEating</option>
+                                                                <option value="true"><i class="fas fa-male"></i> consolidée</option>
+                                                                <option value="false"><i class="fas fa-male"></i> non consolidée</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col-sm-12">
+                                                    <div class="input-group form-control-lg">
+                                                        <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                 <i class="fas fa-stethoscope"></i>
+                                                </span>
+                                                        </div>
+                                                        <div class="form-group" style="width: 80%">
+                                                            <select class="selectpicker" data-style="select-with-transition" name="sport" required>
+                                                                <option value=""><i class="fas fa-male"></i> Sport</option>
+                                                                <option value="true"><i class="fas fa-male"></i> consolidée</option>
+                                                                <option value="false"><i class="fas fa-male"></i> non consolidée</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="input-group form-control-lg">
+                                                        <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                 <i class="fas fa-stethoscope"></i>
+                                                </span>
+                                                        </div>
+                                                        <div class="form-group" style="width: 80%">
+                                                            <select class="selectpicker" data-style="select-with-transition" name="sommeil" required>
+                                                                <option value=""><i class="fas fa-male"></i> Sommeil</option>
+                                                                <option value="true"><i class="fas fa-male"></i> consolidée</option>
+                                                                <option value="false"><i class="fas fa-male"></i> non consolidée</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <!--<div class="input-group form-control-lg">
+                                                        <input type="text" class="form-control" name="poidsPerdus" required />
+
+                                                    </div>-->
+                                                    <input name="formule.codeFormule" th:value="1" th:if="${client.getFormule().class.simpleName}=='Basic'" style="visibility:hidden;"/>
+                                                    <input name="formule.codeFormule" th:value="2" th:if="${client.getFormule().class.simpleName}=='Silver'" style="visibility:hidden;"/>
+                                                    <input name="formule.codeFormule" th:value="3" th:if="${client.getFormule().class.simpleName}=='Gold'" style="visibility:hidden;"/>
+
+                                                    <input name="coach.codeCoach" th:value="${#strings.toLowerCase(client.coach.getCodeCoach())}" style="visibility:hidden;"/>
+
+                                                    <input name="codeClient" th:value="${(client.codeClient)}" style="visibility:hidden;"/>
+
+                                                </div>
+                                            </div>
+                                            <div class="row justify-content-center">
+                                                <div class="col-lg-12">
+                                                    <div class="input-group form-control-lg">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">
+
+                                                            </span>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="infosSupplementaire" style="color: #4CAF50 !important;">Infos supplémentaire</label>
+                                                            <textarea class="form-control" id="infosSupplementaire" name="infosSupplementaire" rows="3" style="width: 115% !important;"
+                                                            ></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-link">valider <i class="material-icons">done</i></button>
+                                            <button type="button" class="btn btn-danger btn-link" data-dismiss="modal">Fermer <i class="material-icons">close</i></button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!--************************** FIN DE LA CLASSE MODALE POUR L'AJOUT DU RESUME**************************-->
                 <div class="col-md-8 col-12 mr-auto ml-auto">
                     <!--      Wizard container        -->
                     <div class="wizard-container">

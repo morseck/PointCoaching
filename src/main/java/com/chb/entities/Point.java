@@ -30,15 +30,12 @@ public class Point implements Serializable {
     @ManyToOne
     @JoinColumn(name = "CODE_FORM")
     private Formule formule;
-    @ManyToOne
-    @JoinColumn(name = "CODE_RESU")
-    private ResumeRdv resumeRdv;
 
     public Point() {
         super();
     }
 
-    public Point(Date datePoint, double poidsPerdus, int semaine, Boolean routineAlimentaire, Boolean mindfulEating, Boolean hydratation, Boolean sport, String infosSupplementaire, Boolean stress, Boolean sommeil, Coach coach, Client client,Formule formule,ResumeRdv resumeRdv) {
+    public Point(Date datePoint, double poidsPerdus, int semaine, Boolean routineAlimentaire, Boolean mindfulEating, Boolean hydratation, Boolean sport, String infosSupplementaire, Boolean stress, Boolean sommeil, Coach coach, Client client,Formule formule) {
         super();
         this.datePoint = datePoint;
         this.poidsPerdus = poidsPerdus;
@@ -53,7 +50,6 @@ public class Point implements Serializable {
         this.coach = coach;
         this.client = client;
         this.formule = formule;
-        this.resumeRdv = resumeRdv;
     }
 
     public Long getCodePoint() {
@@ -166,13 +162,5 @@ public class Point implements Serializable {
 
     public void setFormule(Formule formule) {
         this.formule = formule;
-    }
-
-    public ResumeRdv getResumeRdv() {
-        return resumeRdv;
-    }
-
-    public void setResumeRdv(ResumeRdv resumeRdv) {
-        this.resumeRdv = resumeRdv;
     }
 }
