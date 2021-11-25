@@ -1,6 +1,7 @@
 package com.chb.sec;
 
 import com.chb.entities.Coach;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -25,10 +26,10 @@ public class SecurityController extends HttpServlet {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String home(HttpServletRequest request){
-        if(request.isUserInRole("USER"))
-        return "redirect:/listClientsDuCoach";
-        else if(request.isUserInRole("SUPERADMIN"))
+        if(request.isUserInRole("SUPERADMIN"))
             return "redirect:/tabClient";
+        else if(request.isUserInRole("USER"))
+            return "redirect:/listClientsDuCoach";
         else
             return "/403";
     }

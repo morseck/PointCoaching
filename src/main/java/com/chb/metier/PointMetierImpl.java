@@ -37,9 +37,8 @@ public class PointMetierImpl implements IPointMetier{
     }
 
     @Override
-    public List<Client> listClientDuCoach(String nomCoach) {
-
-        return clientRepository.listClientsDuCoach(nomCoach);
+    public List<Client> listClientDuCoach(String codeCoach) {
+        return clientRepository.listClientsDuCoach(codeCoach);
     }
 
     @Override

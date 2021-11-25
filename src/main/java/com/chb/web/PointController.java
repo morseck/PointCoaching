@@ -30,7 +30,7 @@ public class PointController extends HttpServlet{
     @Autowired
     private IPointMetier pointMetier;
 
-    @RequestMapping("/tabClient")
+    @GetMapping(value = "/tabClient")
     public String index2(Model model) {
         try {
             List<Client> pageClients = clientRepository.findAll();
@@ -115,21 +115,19 @@ public class PointController extends HttpServlet{
     public String deleteClient(Long codeClient){
         Client cl = clientRepository.findClientByCodeClient(codeClient);
         clientRepository.delete(cl);
-        return "redirect:/listClient";
+        return "redirect:/listClientsDuCoach";
     }
 
-    @RequestMapping("/listClientsDuCoach")
+    @GetMapping(value = "/listClientsDuCoach")
     public String clientCoach(Model model, HttpServletRequest request) {
-        try {
-                String username = request.getUserPrincipal().getName();
+        String username = request.getUserPrincipal().getName();
+        if(!(username.isEmpty())){
                 List<Client> pageClients = pointMetier.listClientDuCoach(username);
                 model.addAttribute("listClients", pageClients);
-                return "listClientsCoach";
+                return "listClientsDuCoach";
 
-        } catch (Exception e) {
-            model.addAttribute("exception", e);
-        }
-        return "403";
+        } else
+            return "403";
     }
     // ************************** Formulaire d'ajout pour les points ***************************************
     @RequestMapping(value = "/ajoutPoint", method = RequestMethod.GET)
@@ -177,8 +175,6 @@ public class PointController extends HttpServlet{
         return "redirect:/listClientsDuCoach";
     }
 
-
-
     @RequestMapping("/listPoint")
     public String tabPoints(Model model, HttpServletRequest request) {
         String username = request.getUserPrincipal().getName();
@@ -194,7 +190,7 @@ public class PointController extends HttpServlet{
         return "redirect:/profilClient";
     }
 
-    // **************************** Formulaire d'ajout pour les coachs ****************************************
+    // **************************** Formulaire d'ajout et d'affichage pour les coachs ****************************************
     @RequestMapping(value = "/ajoutCoach", method = RequestMethod.GET)
     public String formCoach(Model model) {
         model.addAttribute("coach", new Coach());

@@ -3,7 +3,7 @@
                 xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
-    <title>Liste clientes par coach</title>
+    <title>Liste clientes Silver</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" type="text/css"
@@ -224,7 +224,7 @@
                                 <div class="card-icon">
                                     <i class="fas fa-user m-1" style="font-size: x-large"></i>
                                 </div>
-                                <h4 class="card-title">Liste des clientes</h4>
+                                <h4 class="card-title">Liste des clientes Silver</h4>
                             </div>
                             <div class="card-body">
                                 <div class="toolbar">
@@ -244,7 +244,6 @@
                                             <th>Téléphone</th>
                                             <th>Email</th>
                                             <th>Sexe</th>
-                                            <th>Formule</th>
                                             <th class="text-right">Actions</th>
                                         </tr>
                                         </thead>
@@ -260,12 +259,11 @@
                                             <th>Téléphone</th>
                                             <th>Email</th>
                                             <th>Sexe</th>
-                                            <th>Formule</th>
                                             <th class="text-right">Actions</th>
                                         </tr>
                                         </tfoot>
                                         <tbody>
-                                        <tr th:each="c:${listClients}">
+                                        <tr th:each="c:${listSil}">
                                             <td><span th:text="${c.codeClient}"></span></td>
                                             <td><span th:text="${c.prenomClient}"></span></td>
                                             <td><span th:text="${c.nomClient}"></span></td>
@@ -276,7 +274,6 @@
                                             <td><span th:text="${c.numClient}"></span></td>
                                             <td><span th:text="${c.emailClient}"></span></td>
                                             <td><span th:text="${c.sexe}"></span></td>
-                                            <td><span th:text="${c.formule.class.simpleName}" class="badge filter badge-warning"></span></td>
                                             <td class="text-right&">
                                                 <a th:href="@{'/consulterClient?prenomClient='+${c.prenomClient}}" class="btn btn-link btn-info btn-just-icon like"><i class="material-icons">favorite</i></a>
                                                 <a th:href="@{'/editClient?codeClient='+${c.codeClient}}" class="btn btn-link btn-warning btn-just-icon edit"><i class="material-icons">dvr</i></a>
